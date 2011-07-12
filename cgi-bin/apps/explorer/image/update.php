@@ -89,7 +89,7 @@ extends PHP_APE_Explorer_Image_function
       $sFilePath = PHP_APE_Util_File_Any::encodePath( $roController->getFullPath().'/'.$sFileName );
 
       // ... embed IPTC data
-      $roJPEGMetaData =& new PHP_APE_Util_Image_JPEG( $sFilePath );
+      $roJPEGMetaData = new PHP_APE_Util_Image_JPEG( $sFilePath );
       $roJPEGMetaData->setIPTCField( 'ObjectName', $roArgumentSet->useElementByID( 'iptc_name' )->useContent()->getValue() );
       $roJPEGMetaData->setIPTCField( 'Headline', $roArgumentSet->useElementByID( 'iptc_headline' )->useContent()->getValue() );
       $roJPEGMetaData->setIPTCField( 'Caption', $roArgumentSet->useElementByID( 'iptc_caption' )->useContent()->getValue() );
