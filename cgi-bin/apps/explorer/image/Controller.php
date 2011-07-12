@@ -276,12 +276,12 @@ extends PHP_APE_Explorer_Controller
         $this->executeDeleteFunction( $oFunction, $rasErrors );
 
         // Redirect
-        PHP_APE_Util_BrowserControl::goto( $this->makeRequestURL( $this->getRequestURL(), null, 'list' ), null, true );
+        PHP_APE_Util_BrowserControl::redirect( $this->makeRequestURL( $this->getRequestURL(), null, 'list' ), null, true );
       }
       catch( PHP_APE_HTML_Data_Exception $e )
       {
         // Redirect
-        PHP_APE_Util_BrowserControl::goto( $this->makeRequestURL( $this->getRequestURL(), null,'list', null, $rasRequestData, $rasErrors ), null, true );
+        PHP_APE_Util_BrowserControl::redirect( $this->makeRequestURL( $this->getRequestURL(), null,'list', null, $rasRequestData, $rasErrors ), null, true );
       }
       break;
 
@@ -330,12 +330,12 @@ extends PHP_APE_Explorer_Controller
           PHP_APE_Util_BrowserControl::close();
         }
         else
-          PHP_APE_Util_BrowserControl::goto( $this->makeRequestURL( $this->getRequestURL(), null, 'list' ), null, true );
+          PHP_APE_Util_BrowserControl::redirect( $this->makeRequestURL( $this->getRequestURL(), null, 'list' ), null, true );
       }
       catch( PHP_APE_HTML_Data_Exception $e )
       {
         // Redirect
-        PHP_APE_Util_BrowserControl::goto( $this->makeRequestURL( $this->getRequestURL(), null, $sSource, $mPrimaryKey, $rasRequestData, $rasErrors, $bIsPopup ), null, true );
+        PHP_APE_Util_BrowserControl::redirect( $this->makeRequestURL( $this->getRequestURL(), null, $sSource, $mPrimaryKey, $rasRequestData, $rasErrors, $bIsPopup ), null, true );
       }
       break;
 
@@ -386,12 +386,12 @@ extends PHP_APE_Explorer_Controller
           PHP_APE_Util_BrowserControl::close();
         }
         else
-          PHP_APE_Util_BrowserControl::goto( $this->makeRequestURL( $this->getRequestURL(), null, 'detail', $mPrimaryKey ), null, true );
+          PHP_APE_Util_BrowserControl::redirect( $this->makeRequestURL( $this->getRequestURL(), null, 'detail', $mPrimaryKey ), null, true );
       }
       catch( PHP_APE_HTML_Data_Exception $e )
       {
         // Redirect
-        PHP_APE_Util_BrowserControl::goto( $this->makeRequestURL( $this->getRequestURL(), null, $sSource, $mPrimaryKey, $rasRequestData, $rasErrors, $bIsPopup ), null, true );
+        PHP_APE_Util_BrowserControl::redirect( $this->makeRequestURL( $this->getRequestURL(), null, $sSource, $mPrimaryKey, $rasRequestData, $rasErrors, $bIsPopup ), null, true );
       }
       break;
 
