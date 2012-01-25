@@ -1,18 +1,15 @@
 # GUI Data
 Title = "PHP-APE Explorer"
 
-Name.FrameSet.SideBar = "Side bar"
-Description.FrameSet.SideBar = "Enable/disable side bar"
-Name.FrameSet.TopBar = "Top bar"
-Description.FrameSet.TopBar = "Enable/disable top bar"
+Name.FrameSet.LeftBar = "Left bar"
+Description.FrameSet.LeftBar = "Enable/disable left bar"
 
-Name.SideBar.Directories = "Directories"
-Description.SideBar.Directories = "Browse sub-directories"
-Description.SideBar.Directories.Use = "Enable/disable directory browser"
-Name.SideBar.Image.Thumbnails = "Thumbnails"
-Description.SideBar.Image.Thumbnails = "Click on each thumbnail to view its detailed (zoomed) data"
-Description.SideBar.Image.Thumbnails.Use = "Enable/disable thumbnails"
+Name.LeftBar.Directories = "Directories"
+Description.LeftBar.Directories = "Browse sub-directories"
+Description.LeftBar.Directories.Use = "Enable/disable directory browser"
 
+Label.Preferences.Directory.Browser = "Folders"
+Tooltip.Preferences.Directory.Browser = "Show sub-folders browser"
 Label.Preferences.Image = "Images"
 Tooltip.Preferences.Image = "Customize the image explorer according to your preferences"
 Label.Preferences.Image.Thumbnails = "Thumbnails"

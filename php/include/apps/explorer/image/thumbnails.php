@@ -101,7 +101,7 @@ implements PHP_APE_Data_isListAbleResultSet, PHP_APE_HTML_hasSmarty
       $sIMG .= ' />';
 
       // ... hyperlink
-      $sURL = $roController->makeRequestURL( 'content.php', null, 'detail', $sFileBasename );
+      $sURL = $roController->makeRequestURL( 'index.php', null, 'detail', $sFileBasename );
       return PHP_APE_HTML_Tags::htmlAnchor( $sURL, $sIMG, null, 'PHP_APE_Explorer_Content', true );
     }
 

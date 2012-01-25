@@ -57,17 +57,29 @@ extends PHP_APE_Explorer_Controller
 
   /** Returns this controller's preferences-setting bar
    *
-   * @param string $sStyle Associated (cell) CSS style directives (<SAMP>STYLE="..."</SAMP>)
-   * @param string $sTableStyle Associated (table) CSS style directives (<SAMP>STYLE="..."</SAMP>)
    * @return string
    */
-  public static function htmlPreferencesControllerBar( $sStyle = null, $sTableStyle = null )
+  public function htmlPreferencesControllerBar()
   {
     // Output
     $sOutput = null;
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen( $sStyle, $sTableStyle );
+    $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen();
     $sOutput .= PHP_APE_HTML_SmartTags::htmlIcon( 'S-control', null, null, null, true );
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
+
+    // ... Directory browser
+    $bUseLeftBar = self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.leftbar.use' );
+    if( !$bUseLeftBar )
+    {
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['label.preferences.directory.browser'].':', null, null, self::$asResources['tooltip.preferences.directory.browser'], null, false, false );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
+      $bDirectoryBrowser_Use = self::$roEnvironment->getUserParameter( 'php_ape.explorer.directory.browser.use' );
+      $sOutput .= '<INPUT TYPE="checkbox" CLASS="checkbox" ONCLICK="javascript:self.location.replace(PHP_APE_URL_addQuery(\''.self::$oDataSpace_JavaScript->encodeData( ltrim( self::$roEnvironment->makePreferencesURL( array( 'php_ape.explorer.directory.browser.use' => $bDirectoryBrowser_Use ? 0 : 1 ), null ), '?' ) ).'\',self.location.href.toString()));"'.( $bDirectoryBrowser_Use ? ' CHECKED': null ).'/>';
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd();
+    }
+
+
+    // ... Thumbnails (in list)
     $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['label.preferences.image.thumbnails'].':', null, null, self::$asResources['tooltip.preferences.image.thumbnails'], null, false, false );
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
     $bUseThumbnails_inList = self::$roEnvironment->getUserParameter( 'php_ape.explorer.image.thumbnail.list.use' );
@@ -75,11 +87,15 @@ extends PHP_APE_Explorer_Controller
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
     $sOutput .= '<P>'.self::$oDataSpace_HTML->encodeData(self::$asResources['text.preferences.image.thumbnails.inlist'],false,true).'</P>';
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd();
+
+    // ... Thumbnails (in detail)
     $bUseThumbnails_inDetail = self::$roEnvironment->getUserParameter( 'php_ape.explorer.image.thumbnail.detail.use' );
     $sOutput .= '<INPUT TYPE="checkbox" CLASS="checkbox" ONCLICK="javascript:self.location.replace(PHP_APE_URL_addQuery(\''.self::$oDataSpace_JavaScript->encodeData( ltrim( self::$roEnvironment->makePreferencesURL( array( 'php_ape.explorer.image.thumbnail.detail.use' => $bUseThumbnails_inDetail ? 0 : 1 ), null ), '?' ) ).'\',self.location.href.toString()));"'.( $bUseThumbnails_inDetail ? ' CHECKED': null ).'/>';
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
     $sOutput .= '<P>'.self::$oDataSpace_HTML->encodeData(self::$asResources['text.preferences.image.thumbnails.indetail'],false,true).'</P>';
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd();
+
+    // ... Size
     $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['label.preferences.image.detail.size'].':', null, null, self::$asResources['tooltip.preferences.image.detail.size'], null, false, false );
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
     $iDetailSize = self::$roEnvironment->getUserParameter( 'php_ape.explorer.image.size.detail' );
@@ -91,6 +107,8 @@ extends PHP_APE_Explorer_Controller
     $sOutput .= '</SELECT>';
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( null, false );
     $sOutput .= '<P>px</P>';
+
+    // End
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignClose();
     return $sOutput;
   }
@@ -107,35 +125,6 @@ extends PHP_APE_Explorer_Controller
   public function htmlTitle()
   {
     return PHP_APE_HTML_SmartTags::htmlLabel( $this->getTitle(), 'M-image', null, null, null, true, false, 'H1' );
-  }
-
-  /** Returns the HTML page's footer
-   *
-   * @return string
-   */
-  public function htmlFooter()
-  {
-    // Resources
-    $asResources = PHP_APE_HTML_WorkSpace::useEnvironment()->loadProperties( 'PHP_APE_HTML_Components' );
-
-    // Output
-    $sOutput = null;
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlSeparator();
-    $sOutput .= '<DIV STYLE="FLOAT:left;PADDING:2px;">'."\r\n";
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen();
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( $asResources['label.preferences.display'].':', 'S-display', null, $asResources['tooltip.preferences.display'], null, false, false );
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING:2px !important;', false );
-    $sOutput .= PHP_APE_HTML_Components::htmlPreferenceCSS();
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignClose();
-    $sOutput .= '</DIV>'."\r\n";
-    $sOutput .= '<DIV CLASS="do-not-print" STYLE="FLOAT:left;PADDING:2px;">'."\r\n";
-    $sOutput .= self::htmlPreferencesControllerBar();
-    $sOutput .= '</DIV>'."\r\n";
-    $sOutput .= '<DIV CLASS="do-not-print" STYLE="FLOAT:right;PADDING:2px;">'."\r\n";
-    $sOutput .= PHP_APE_HTML_Components::htmlPreferences();
-    $sOutput .= '</DIV>'."\r\n";
-    $sOutput .= '<DIV STYLE="CLEAR:both;"></DIV>'."\r\n";
-    return $sOutput;
   }
 
 
@@ -197,50 +186,6 @@ extends PHP_APE_Explorer_Controller
   /*
    * METHODS: actions/view - OVERRIDE
    ********************************************************************************/
-
-  public function htmlSideBar_Add()
-  {
-    // Output
-    $sOutput = null;
-
-    // ... Thumbnails
-    if( $this->isReadAuthorized() )
-    {
-      $bThumbnails_Use = self::$roEnvironment->getUserParameter( 'php_ape.explorer.sidebar.image.thumbnail.use' );
-      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen( 'WIDTH:100%;', 'WIDTH:100%;' );
-      $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['name.sidebar.image.thumbnails'], 'M-image', null, self::$asResources['description.sidebar.image.thumbnails'], null, true, false, 'H1' );
-      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( null, false );
-      $sOutput .= PHP_APE_HTML_Components::htmlControlFrameset( array( 'php_ape.explorer.sidebar.image.thumbnail.use' ),
-                                                                array( self::$asResources['description.sidebar.image.thumbnails.use'] ),
-                                                                array( $bThumbnails_Use ? 'S-minimize' : 'S-maximize' ),
-                                                                'self' );
-      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignClose();
-
-      // ... content
-      if( $bThumbnails_Use )
-      {
-
-        // Database object
-        $oView = new PHP_APE_Explorer_Image_thumbnails();
-
-        // Prepare  
-        $this->prepareListView( $oView );
-
-        // Thumbnails
-        $oHTML = $this->getListView( $oView, PHP_APE_Data_isQueryAbleResultSet::Query_All );
-        $oHTML->prefUseControls( false );
-        $oHTML->prefUseHeader( false );
-        $oHTML->prefUseFooter( false );
-        $oHTML->prefUseDisplayPreferences( false );
-        $oHTML->prefUseOrderPreferences( false );
-        $sOutput .= $oHTML->html();
-
-      }
-    }
-
-    // End
-    return $sOutput;
-  }
 
   public function htmlViewOrAction()
   {
@@ -424,6 +369,14 @@ extends PHP_APE_Explorer_Controller
 
     default:
     case 'list':
+      // Directory browser
+      if( !self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.leftbar.use' ) and
+          self::$roEnvironment->getUserParameter( 'php_ape.explorer.directory.browser.use' ) )
+      {
+        $sOutput .= $this->htmlDirectoryBrowser();
+        $sOutput .= PHP_APE_HTML_SmartTags::htmlSeparator();
+      }
+
       // Database object
       $oView = new PHP_APE_Explorer_Image_list();
 

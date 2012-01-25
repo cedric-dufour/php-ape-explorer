@@ -23,7 +23,7 @@ Error.Insert.Overwrite.Denied = "Impossible d'écraser le fichier existant"
 Error.Insert.Overwrite.Directory = "Impossible d'écraser un répertoire existant"
 Error.Insert.Overwrite.Delete = "Impossible d'effacer le fichier existant"
 Error.Insert = "Impossible d'insérer le nouveau fichier"
-Error.Update.Overwrite. = "Impossible d'écraser un fichier existant"
+Error.Update.Overwrite = "Impossible d'écraser un fichier existant"
 Error.Update = "Impossible de mettre le fichier à jour"
 Error.Delete = "Impossible d'effacer le fichier"
 

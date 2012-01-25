@@ -121,7 +121,7 @@ implements PHP_APE_Data_isListAbleResultSet, PHP_APE_HTML_hasSmarty, PHP_APE_Dat
       $sIMG .= ' />';
 
       // ... hyperlink
-      $sURL = $roController->makeRequestURL( 'content.php', null, 'detail', $this->getPrimaryKey() );
+      $sURL = $roController->makeRequestURL( 'index.php', null, 'detail', $this->getPrimaryKey() );
       return PHP_APE_HTML_Tags::htmlAnchor( $sURL, $sIMG, null, null, true );
     }
 

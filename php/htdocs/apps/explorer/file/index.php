@@ -42,7 +42,7 @@ require_once( PHP_APE_ROOT.'/apps/explorer/load.php' );
 try
 {
   $roController =& PHP_APE_Explorer_WorkSpace::useFileController();
-  echo $roController->htmlFrameSet();
+  echo $roController->htmlPage();
 }
 catch( PHP_APE_Exception $e )
 {

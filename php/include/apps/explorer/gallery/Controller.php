@@ -57,22 +57,35 @@ extends PHP_APE_Explorer_Image_Controller
 
   /** Returns this controller's preferences-setting bar
    *
-   * @param string $sStyle Associated (cell) CSS style directives (<SAMP>STYLE="..."</SAMP>)
-   * @param string $sTableStyle Associated (table) CSS style directives (<SAMP>STYLE="..."</SAMP>)
    * @return string
    */
-  public static function htmlPreferencesControllerBar( $sStyle = null, $sTableStyle = null )
+  public function htmlPreferencesControllerBar()
   {
     // Output
     $sOutput = null;
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen( $sStyle, $sTableStyle );
+    $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen();
     $sOutput .= PHP_APE_HTML_SmartTags::htmlIcon( 'S-control', null, null, null, true );
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
+
+    // ... Directory browser
+    $bUseLeftBar = self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.leftbar.use' );
+    if( !$bUseLeftBar )
+    {
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['label.preferences.directory.browser'].':', null, null, self::$asResources['tooltip.preferences.directory.browser'], null, false, false );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
+      $bDirectoryBrowser_Use = self::$roEnvironment->getUserParameter( 'php_ape.explorer.directory.browser.use' );
+      $sOutput .= '<INPUT TYPE="checkbox" CLASS="checkbox" ONCLICK="javascript:self.location.replace(PHP_APE_URL_addQuery(\''.self::$oDataSpace_JavaScript->encodeData( ltrim( self::$roEnvironment->makePreferencesURL( array( 'php_ape.explorer.directory.browser.use' => $bDirectoryBrowser_Use ? 0 : 1 ), null ), '?' ) ).'\',self.location.href.toString()));"'.( $bDirectoryBrowser_Use ? ' CHECKED': null ).'/>';
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd();
+    }
+
+    // ... Thumbnails
     $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['label.preferences.image.thumbnails'].':', null, null, self::$asResources['tooltip.preferences.image.thumbnails'], null, false, false );
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
     $bUseThumbnails_inList = self::$roEnvironment->getUserParameter( 'php_ape.explorer.image.thumbnail.list.use' );
     $sOutput .= '<INPUT TYPE="checkbox" CLASS="checkbox" ONCLICK="javascript:self.location.replace(PHP_APE_URL_addQuery(\''.self::$oDataSpace_JavaScript->encodeData( ltrim( self::$roEnvironment->makePreferencesURL( array( 'php_ape.explorer.image.thumbnail.list.use' => $bUseThumbnails_inList ? 0 : 1 ), null ), '?' ) ).'\',self.location.href.toString()));"'.( $bUseThumbnails_inList ? ' CHECKED': null ).'/>';
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd();
+
+    // ... Size
     $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['label.preferences.image.detail.size'].':', null, null, self::$asResources['tooltip.preferences.image.detail.size'], null, false, false );
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
     $iDetailSize = self::$roEnvironment->getUserParameter( 'php_ape.explorer.image.size.detail' );
@@ -84,6 +97,8 @@ extends PHP_APE_Explorer_Image_Controller
     $sOutput .= '</SELECT>';
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( null, false );
     $sOutput .= '<P>px</P>';
+
+    // End
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignClose();
     return $sOutput;
   }
@@ -93,123 +108,15 @@ extends PHP_APE_Explorer_Image_Controller
    * METHODS: HTML components - OVERRIDE
    ********************************************************************************/
 
-  /** Returns the HTML page's (top) title
-   *
-   * @return string
-   */
   public function htmlTitle()
   {
     return PHP_APE_HTML_SmartTags::htmlLabel( $this->getTitle(), 'M-image', null, null, null, true, false, 'H1' );
-  }
-
-  /** Returns the HTML page's footer
-   *
-   * @return string
-   */
-  public function htmlFooter()
-  {
-    // Resources
-    $asResources = PHP_APE_HTML_WorkSpace::useEnvironment()->loadProperties( 'PHP_APE_HTML_Components' );
-
-    // Output
-    $sOutput = null;
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlSeparator();
-    $sOutput .= '<DIV CLASS="do-not-print" STYLE="FLOAT:left;PADDING:2px;">'."\r\n";
-    $sOutput .= self::htmlPreferencesControllerBar();
-    $sOutput .= '</DIV>'."\r\n";
-    $sOutput .= '<DIV CLASS="do-not-print" STYLE="FLOAT:right;PADDING:2px;">'."\r\n";
-    $sOutput .= PHP_APE_HTML_Components::htmlPreferences();
-    $sOutput .= '</DIV>'."\r\n";
-    $sOutput .= '<DIV STYLE="CLEAR:both;"></DIV>'."\r\n";
-    return $sOutput;
   }
 
 
   /*
    * METHODS: actions/view - OVERRIDE
    ********************************************************************************/
-
-  public function htmlFrameSet()
-  {
-    return $this->htmlContent();
-  }
-
-  public function htmlContent()
-  {
-    // Output
-    $sOutput = null;
-
-    // Controller
-    $bIsPopup = $this->isPopup();
-    $sDestination = $this->getDestination();
-
-    // ... HTML
-    $sOutput .= PHP_APE_HTML_Tags::htmlDocumentOpen();
-
-    // ... HEAD
-    $sOutput .= PHP_APE_HTML_Tags::htmlHeadOpen();
-    $sOutput .= PHP_APE_HTML_Tags::htmlHeadCharSet();
-    $sOutput .= PHP_APE_HTML_Tags::htmlJavaScript( 'PHP-APE' );
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlCSS();
-    $sOutput .= PHP_APE_HTML_Tags::htmlHeadTitle( $this->getTitle() );
-    $sOutput .= PHP_APE_HTML_Tags::htmlHeadClose();
-
-    // ... BODY
-    $sOutput .= PHP_APE_HTML_Tags::htmlBodyOpen( 'APE' );
-    $sOutput .= '<DIV CLASS="APE">'."\r\n";
-
-    // ... Header
-    if( !$bIsPopup ) $sOutput .= $this->htmlHeader();
-
-    // ... Title
-    if( !$bIsPopup and ( empty( $sDestination ) or $sDestination == 'list' or $sDestination == 'folders' ) )
-    {
-      $sOutput .= '<DIV CLASS="do-not-print" STYLE="FLOAT:right;PADDING:2px;">'."\r\n";
-      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen();
-      if( $sDestination == 'folders' )
-        $sOutput .= $this->htmlImageBrowser();
-      else
-        $sOutput .= $this->htmlFolderBrowser();
-      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd();
-      $sOutput .= PHP_APE_HTML_Components::htmlAuthentication();
-      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignClose();
-      $sOutput .= '</DIV>'."\r\n";
-    }
-    $sOutput .= '<DIV STYLE="FLOAT:left;PADDING:2px;">'."\r\n";
-    $sOutput .= $this->htmlTitle();
-    $sOutput .= '</DIV>'."\r\n";
-    $sOutput .= '<DIV STYLE="CLEAR:both;"></DIV>'."\r\n";
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
-
-    // ... View
-    $sOutput .= '<BLOCKQUOTE>'."\r\n";
-    try 
-    {
-      $sOutput .= $this->htmlViewOrAction();
-    }
-    catch( PHP_APE_Auth_AuthorizationException $e )
-    {
-      $sOutput .= PHP_APE_HTML_Components::htmlAuthorizationException( $e );
-    }
-    catch( PHP_APE_Exception $e )
-    {
-      $sOutput .= PHP_APE_HTML_Components::htmlUnexpectedException( $e );
-    }
-    $sOutput .= '</BLOCKQUOTE>'."\r\n";
-
-
-    // ... Footer
-    if( !$bIsPopup ) $sOutput .= $this->htmlFooter();
-
-    // ... END
-    $sOutput .= '</DIV>'."\r\n";
-    $sOutput .= PHP_APE_HTML_Tags::htmlBodyClose();
-
-    $sOutput .= PHP_APE_HTML_Tags::htmlDocumentClose();
-
-    // End
-    return $sOutput;
-  }
 
   public function htmlViewOrAction()
   {
@@ -259,37 +166,16 @@ extends PHP_APE_Explorer_Image_Controller
       $sOutput .= $this->htmlDetailControls( $iPrimaryKey );
     break;
 
-    case 'folders':
-      $sOutput .= '<UL>'."\r\n";
-      // ... parent
-      $sDirectoryName = ltrim( basename( $this->getExplorerPath() ), './' );
-      if( strlen( $sDirectoryName ) > 0 )
-      {
-        $sExplorerPath = ltrim( dirname( $this->getExplorerPath() ), './' );
-        $sOutput .= '<LI>'.PHP_APE_HTML_Tags::htmlAnchor( $this->makeRequestURL( 'index.php', $sExplorerPath, 'folders' ), '..' ).'</LI>'."\r\n";
-      }
-      // ... children
-      if( $this->isReadAuthorized() )
-      {
-        $asDirectoriesPaths = glob( PHP_APE_Util_File_Any::encodePath( $this->getFullPath().'/*' ) );
-        foreach( $asDirectoriesPaths as $sDirectoryPath )
-        {
-          // ... check path
-          if( !is_dir( $sDirectoryPath ) ) continue;
-          if( !is_readable( $sDirectoryPath ) ) continue;
-          $sExplorerPath = $this->getExplorerPath().'/'.PHP_APE_Util_File_Any::decodePath( basename( $sDirectoryPath ) );
-          if( !PHP_APE_Explorer_WorkSpace::useEnvironment()->getStaticParameter( 'php_ape.explorer.auth.noconf' ) and
-              !$this->hasDirectoryParameters( $sExplorerPath ) ) continue;
-
-          // ... link
-          $sOutput .= '<LI>'.PHP_APE_HTML_Tags::htmlAnchor( $this->makeRequestURL( 'index.php', $sExplorerPath, 'folders' ), basename( $sExplorerPath ) ).'</LI>'."\r\n";
-        }
-      }
-      $sOutput .= '</UL>'."\r\n";
-      $sOutput .= PHP_APE_HTML_SmartTags::htmlSeparator();
-
     default:
     case 'list':
+      // Directory browser
+      if( !self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.leftbar.use' ) and
+          self::$roEnvironment->getUserParameter( 'php_ape.explorer.directory.browser.use' ) )
+      {
+        $sOutput .= $this->htmlDirectoryBrowser();
+        $sOutput .= PHP_APE_HTML_SmartTags::htmlSeparator();
+      }
+
       // Database object
       $oView = new PHP_APE_Explorer_Gallery_list();
 
@@ -319,32 +205,6 @@ extends PHP_APE_Explorer_Image_Controller
       break;
 
     }
-
-    // End
-    return $sOutput;
-  }
-
-  public function htmlImageBrowser()
-  {
-    // Output
-    $asResources = PHP_APE_HTML_WorkSpace::useEnvironment()->loadProperties( 'PHP_APE_Explorer_Gallery_Resources' );
-    $sOutput = null;
-
-    // Browser button
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( $asResources['label.images'], 'S-image', $this->makeRequestURL( 'index.php' ), $asResources['tooltip.images'], null, true, false );
-
-    // End
-    return $sOutput;
-  }
-
-  public function htmlFolderBrowser()
-  {
-    // Output
-    $asResources = PHP_APE_HTML_WorkSpace::useEnvironment()->loadProperties( 'PHP_APE_Explorer_Gallery_Resources' );
-    $sOutput = null;
-
-    // Browser button
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( $asResources['label.folders'], 'S-folder', $this->makeRequestURL( 'index.php', null, 'folders' ), $asResources['tooltip.folders'], null, true, false );
 
     // End
     return $sOutput;

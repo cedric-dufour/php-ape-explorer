@@ -1,8 +1,4 @@
 # GUI Data
-Label.Folders = "Show Folders"
-Tooltip.Folders = "Show sub-folders browser"
-Label.Images = "Images Only"
-Tooltip.Images = "Display only images (hide sub-fodlers browser)"
 Label.Browse = "Browse"
 Tooltip.Browse = "Browse through images in the current folder"
 Label.First = "First"

@@ -2,18 +2,15 @@
 # GUI Data
 Title = "Explorateur PHP-APE"
 
-Name.FrameSet.SideBar = "Menu latéral"
-Description.FrameSet.SideBar = "Activez/désactivez le menu latéral"
-Name.FrameSet.TopBar = "Entête"
-Description.FrameSet.TopBar = "Activez/désactivez l'entête"
+Name.FrameSet.LeftBar = "Menu latéral"
+Description.FrameSet.LeftBar = "Activez/désactivez le menu latéral"
 
-Name.SideBar.Directories = "Répertoires"
-Description.SideBar.Directories = "Parcourez les sous-répertoires"
-Description.SideBar.Directories.Use = "Activez/désactivez le navigateur de répertoire"
-Name.SideBar.Image.Thumbnails = "Aperçus"
-Description.SideBar.Image.Thumbnails = "Cliquez sur chaque aperçu pour en voir le détail (vue élargie)"
-Description.SideBar.Image.Thumbnails.Use = "Activez/désactivez les aperçus"
+Name.LeftBar.Directories = "Répertoires"
+Description.LeftBar.Directories = "Parcourez les sous-répertoires"
+Description.LeftBar.Directories.Use = "Activez/désactivez le navigateur de répertoire"
 
+Label.Preferences.Directory.Browser = "Dossiers"
+Tooltip.Preferences.Directory.Browser = "Affichez le navigateur de sous-dossiers"
 Label.Preferences.Image = "Images"
 Tooltip.Preferences.Image = "Personnalisez l'explorateur d'images en fonction de vos préférences"
 Label.Preferences.Image.Thumbnails = "Aperçus"

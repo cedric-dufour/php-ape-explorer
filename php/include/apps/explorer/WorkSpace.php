@@ -65,12 +65,10 @@
  * <LI><SAMP>php_ape.explorer.image.size.thumbnail</SAMP>: image (maximum) size in thumbnail [default: <SAMP>100</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.image.thumbnail.list.use</SAMP>: use thumbnail in list view [default: <SAMP>false</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.image.thumbnail.detail.use</SAMP>: use thumbnail in detail view [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.frameset.topbar.use</SAMP>: frameset top-bar's usage [default: <SAMP>true</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.frameset.topbar.height</SAMP>: frameset top-bar's dimension (height) [pixels; default: <SAMP>90</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.frameset.sidebar.use</SAMP>: frameset side-bar's usage [default: <SAMP>true</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.frameset.sidebar.width</SAMP>: frameset side-bar's dimension (width) [pixels; default: <SAMP>180</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.sidebar.directory.use</SAMP>: side-bar's directory browser usage [default: <SAMP>true</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.sidebar.image.thumbnail.use</SAMP>: side-bar's thumbnails browser usage [default: <SAMP>true</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.frameset.leftbar.use</SAMP>: frameset left-bar's usage [default: <SAMP>true</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.frameset.leftbar.width</SAMP>: frameset left-bar's dimension (width) [pixels; default: <SAMP>180</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.directory.browser.use</SAMP>: directory browser usage [default: <SAMP>true</SAMP>]</LI>
  * </UL>
  *
  * <P><B>USAGE:</B> directory-specific configuration</P>
@@ -545,15 +543,6 @@ extends PHP_APE_HTML_WorkSpace
         $rValue = false;
     }
 
-    // Frameset top-bar's usage
-    if( array_key_exists( 'php_ape.explorer.frameset.topbar.use', $rasParameters ) )
-    {
-      $rValue =& $rasParameters[ 'php_ape.explorer.frameset.topbar.use' ];
-      $rValue = PHP_APE_Type_Boolean::parseValue( $rValue );
-      if( is_null( $rValue ) )
-        $rValue = true;
-    }
-
     // Frameset top-bar's dimension (height) [pixels]
     if( array_key_exists( 'php_ape.explorer.frameset.topbar.height', $rasParameters ) )
     {
@@ -563,37 +552,28 @@ extends PHP_APE_HTML_WorkSpace
         $rValue = 90;
     }
 
-    // Frameset side-bar's usage
-    if( array_key_exists( 'php_ape.explorer.frameset.sidebar.use', $rasParameters ) )
+    // Frameset left-bar's usage
+    if( array_key_exists( 'php_ape.explorer.frameset.leftbar.use', $rasParameters ) )
     {
-      $rValue =& $rasParameters[ 'php_ape.explorer.frameset.sidebar.use' ];
+      $rValue =& $rasParameters[ 'php_ape.explorer.frameset.leftbar.use' ];
       $rValue = PHP_APE_Type_Boolean::parseValue( $rValue );
       if( is_null( $rValue ) )
         $rValue = true;
     }
 
-    // Frameset side-bar's dimension (width) [pixels]
-    if( array_key_exists( 'php_ape.explorer.frameset.sidebar.width', $rasParameters ) )
+    // Frameset left-bar's dimension (width) [pixels]
+    if( array_key_exists( 'php_ape.explorer.frameset.leftbar.width', $rasParameters ) )
     {
-      $rValue =& $rasParameters[ 'php_ape.explorer.frameset.sidebar.width' ];
+      $rValue =& $rasParameters[ 'php_ape.explorer.frameset.leftbar.width' ];
       $rValue = PHP_APE_Type_Integer::parseValue( $rValue );
       if( is_null( $rValue ) or $rValue < 0 )
         $rValue = 180;
     }
 
-    // Side-bar's directory browser usage
-    if( array_key_exists( 'php_ape.explorer.sidebar.directory.use', $rasParameters ) )
+    // Left-bar's directory browser usage
+    if( array_key_exists( 'php_ape.explorer.directory.browser.use', $rasParameters ) )
     {
-      $rValue =& $rasParameters[ 'php_ape.explorer.sidebar.directory.use' ];
-      $rValue = PHP_APE_Type_Boolean::parseValue( $rValue );
-      if( is_null( $rValue ) )
-        $rValue = true;
-    }
-
-    // Side-bar's thumbnails browser usage
-    if( array_key_exists( 'php_ape.explorer.sidebar.image.thumbnail.use', $rasParameters ) )
-    {
-      $rValue =& $rasParameters[ 'php_ape.explorer.sidebar.image.thumbnail.use' ];
+      $rValue =& $rasParameters[ 'php_ape.explorer.directory.browser.use' ];
       $rValue = PHP_APE_Type_Boolean::parseValue( $rValue );
       if( is_null( $rValue ) )
         $rValue = true;
@@ -630,9 +610,9 @@ extends PHP_APE_HTML_WorkSpace
                               'php_ape.explorer.file.controller' => null, 'php_ape.explorer.image.controller' => null,
                               'php_ape.explorer.image.size.list' => null, 'php_ape.explorer.image.size.detail.choices' => null, 'php_ape.explorer.image.size.detail' => null, 'php_ape.explorer.image.size.thumbnail' => null,
                               'php_ape.explorer.image.thumbnail.list.use' => null, 'php_ape.explorer.image.thumbnail.detail.use' => null,
-                              'php_ape.explorer.frameset.topbar.use' => null, 'php_ape.explorer.frameset.topbar.height' => null,
-                              'php_ape.explorer.frameset.sidebar.use' => null, 'php_ape.explorer.frameset.sidebar.width' => null,
-                              'php_ape.explorer.sidebar.directory.use' => null, 'php_ape.explorer.sidebar.image.thumbnail.use' => null
+                              'php_ape.explorer.frameset.topbar.height' => null,
+                              'php_ape.explorer.frameset.leftbar.use' => null, 'php_ape.explorer.frameset.leftbar.width' => null,
+                              'php_ape.explorer.directory.browser.use' => null
                               )
                         );
   }

@@ -106,8 +106,143 @@ extends PHP_APE_HTML_Controller
 
 
   /*
+   * METHODS: HTML components
+   ********************************************************************************/
+
+  /** Returns the current directory's sub-directories browser (HTML list)
+   *
+   * @return string
+   */
+  public function htmlDirectoryBrowser( $bIsLeftBar = false )
+  {
+    // Environment
+    $oDataSpace_JavaScript = new PHP_APE_DataSpace_JavaScript();
+
+    // Output
+    $sOutput .= '<UL>'."\r\n";
+
+    // ... parent
+    $sDirectoryName = ltrim( basename( $this->getExplorerPath() ), './' );
+    if( strlen( $sDirectoryName ) > 0 )
+    {
+      $sExplorerPath = ltrim( dirname( $this->getExplorerPath() ), './' );
+      $sURL_Content = $this->makeRequestURL( 'index.php', $sExplorerPath );
+      if( $bIsLeftBar )
+      {
+        $sURL_LeftBar = $this->makeLeftBarURL( $sExplorerPath );
+        $sOutput .= '<LI>'.PHP_APE_HTML_Tags::htmlAnchor( "javascript:parent.PHP_APE_Explorer_LeftBar.location.replace('".$oDataSpace_JavaScript->encodeData($sURL_LeftBar)."');parent.PHP_APE_Explorer_Content.location.href='".$oDataSpace_JavaScript->encodeData($sURL_Content)."';", '..' ).'</LI>'."\r\n";
+      } else
+        $sOutput .= '<LI>'.PHP_APE_HTML_Tags::htmlAnchor( "javascript:location.href='".$oDataSpace_JavaScript->encodeData($sURL_Content)."';", '..' ).'</LI>'."\r\n";
+    }
+    // ... children
+    if( $this->isReadAuthorized() )
+    {
+      $asDirectoriesPaths = glob( PHP_APE_Util_File_Any::encodePath( $this->getFullPath().'/*' ) );
+      foreach( $asDirectoriesPaths as $sDirectoryPath )
+      {
+        // ... check path
+        if( !is_dir( $sDirectoryPath ) ) continue;
+        if( !is_readable( $sDirectoryPath ) ) continue;
+        $sExplorerPath = $this->getExplorerPath().'/'.PHP_APE_Util_File_Any::decodePath( basename( $sDirectoryPath ) );
+        if( !PHP_APE_Explorer_WorkSpace::useEnvironment()->getStaticParameter( 'php_ape.explorer.auth.noconf' ) and
+            !$this->hasDirectoryParameters( $sExplorerPath ) ) continue;
+
+        // ... link
+        $sURL_Content = $this->makeRequestURL( 'index.php', $sExplorerPath );
+        if( $bIsLeftBar )
+        {
+          $sURL_LeftBar = $this->makeLeftBarURL( $sExplorerPath );
+          $sOutput .= '<LI>'.PHP_APE_HTML_Tags::htmlAnchor( "javascript:parent.PHP_APE_Explorer_LeftBar.location.replace('".$oDataSpace_JavaScript->encodeData($sURL_LeftBar)."');parent.PHP_APE_Explorer_Content.location.href='".$oDataSpace_JavaScript->encodeData($sURL_Content)."';", basename( $sExplorerPath ) ).'</LI>'."\r\n";
+        } else
+          $sOutput .= '<LI>'.PHP_APE_HTML_Tags::htmlAnchor( "javascript:location.href='".$oDataSpace_JavaScript->encodeData($sURL_Content)."';", basename( $sExplorerPath ) ).'</LI>'."\r\n";
+      }
+    }
+
+    // End
+    $sOutput .= '</UL>'."\r\n";
+    return $sOutput;
+  }
+
+  /** Returns this controller's preferences-setting bar
+   *
+   * @return string
+   */
+  public function htmlPreferencesControllerBar()
+  {
+    // Output
+    $sOutput = null;
+    // ... Directory browser
+    $bUseLeftBar = self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.leftbar.use' );
+    if( !$bUseLeftBar )
+    {
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen();
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlIcon( 'S-control', null, null, null, true );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['label.preferences.directory.browser'].':', null, null, self::$asResources['tooltip.preferences.directory.browser'], null, false, false );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
+      $bDirectoryBrowser_Use = self::$roEnvironment->getUserParameter( 'php_ape.explorer.directory.browser.use' );
+      $sOutput .= '<INPUT TYPE="checkbox" CLASS="checkbox" ONCLICK="javascript:self.location.replace(PHP_APE_URL_addQuery(\''.self::$oDataSpace_JavaScript->encodeData( ltrim( self::$roEnvironment->makePreferencesURL( array( 'php_ape.explorer.directory.browser.use' => $bDirectoryBrowser_Use ? 0 : 1 ), null ), '?' ) ).'\',self.location.href.toString()));"'.( $bDirectoryBrowser_Use ? ' CHECKED': null ).'/>';
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignClose();
+    }
+
+    // End
+    return $sOutput;
+  }
+
+
+  /*
    * METHODS: HTML components - OVERRIDE
    ********************************************************************************/
+
+  /** Returns the page's header
+   *
+   * @return string
+   */
+  public function htmlHeader()
+  {
+    // Output
+    $sOutput = null;
+
+    // ... Application name
+    $sOutput .= '<TABLE STYLE="WIDTH:100%;" CELLSPACING="0"><TR>'."\r\n";
+    $sOutput .= '<TD STYLE="TEXT-ALIGN:left;VERTICAL-ALIGN:top;">'."\r\n";
+    $sOutput .= '<H1>'.PHP_APE_WorkSpace::useEnvironment()->getVolatileParameter( 'php_ape.application.name' ).'</H1>';
+    $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
+    $sOutput .= '<DIV CLASS="do-not-print">'."\r\n";
+    $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen();
+    $iSeparator = 0;
+
+    // ... Frameset control
+    $sOutput .= PHP_APE_HTML_Components::htmlControlFrameset( array( 'php_ape.explorer.frameset.leftbar.use' ),
+                                                              array( self::$asResources['description.frameset.leftbar'] ),
+                                                              array( 'S-frameset-left' ),
+                                                              'top' );
+    $iSeparator++;
+      
+    // ... Authentication
+    if( PHP_APE_Auth_WorkSpace::useEnvironment()->isAuthenticationAllowed() )
+    {
+      $sQuery = preg_replace( '/&?FRAME=[^&]*/is', null , $_SERVER['QUERY_STRING'] );
+      $sQuery = ltrim( $sQuery, '&' );
+      $sAuthBackURL = PHP_APE_Util_URL::addVariable( $_SERVER['SCRIPT_NAME'], $sQuery );
+      if( $iSeparator++ ) $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd();
+      $sOutput .= PHP_APE_HTML_Components::htmlAuthentication( $sAuthBackURL, 'top' );
+    }
+
+    $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignClose();
+    $sOutput .= '</DIV>'."\r\n";
+    $sOutput .= '</TD>'."\r\n";
+
+    // ... Logo
+    $sOutput .= '<TD STYLE="TEXT-ALIGN:right;VERTICAL-ALIGN:top;">'."\r\n";
+    $sOutput .= '<IMG ALT="PHP-APE" TITLE="PHP-APE" WIDTH="48" HEIGHT="48" SRC="'.PHP_APE_HTML_WorkSpace::useEnvironment()->getVolatileParameter( 'php_ape.html.htdocs.url' ).'/img/php-ape-48x48.png"/>';
+    $sOutput .= '</TD>'."\r\n";
+    $sOutput .= '</TR></TABLE>'."\r\n";
+    $sOutput .= PHP_APE_HTML_SmartTags::htmlSeparator();
+
+    // End
+    return $sOutput;
+  }
 
   /** Returns the page's title
    *
@@ -163,10 +298,40 @@ extends PHP_APE_HTML_Controller
 //     return $sOutput;
 //   }
 
+  /** Returns the HTML page's footer
+   *
+   * @return string
+   */
+  public function htmlFooter()
+  {
+    // Output
+    $sOutput = null;
+    $sOutput .= PHP_APE_HTML_SmartTags::htmlSeparator();
+    $sOutput .= '<DIV CLASS="do-not-print" STYLE="FLOAT:left;PADDING:2px;">'."\r\n";
+    $sOutput .= $this->htmlPreferencesControllerBar();
+    $sOutput .= '</DIV>'."\r\n";
+    $sOutput .= '<DIV CLASS="do-not-print" STYLE="FLOAT:right;PADDING:2px;">'."\r\n";
+    $sOutput .= PHP_APE_HTML_Components::htmlPreferences();
+    $sOutput .= '</DIV>'."\r\n";
+    $sOutput .= '<DIV STYLE="CLEAR:both;"></DIV>'."\r\n";
+    return $sOutput;
+  }
+
 
   /*
    * METHODS: request
    ********************************************************************************/
+
+  /** Returns the controller form/input handling URL
+   *
+   * @return string
+   */
+  public function getFormURL()
+  {
+    // Return frame-aware URL
+    if( isset( $_GET['FRAME'] ) ) return PHP_APE_Util_URL::addVariable( parent::getFormURL(), array( 'FRAME' => $_GET['FRAME'] ) );
+    return parent::getFormURL();
+  }
 
   /** Returns the explorer's page URL for the given path and destination (view/action)
    *
@@ -176,7 +341,7 @@ extends PHP_APE_HTML_Controller
    * without prior server proposal.</P>
    * <P><B>INHERITANCE:</B> This method <B>MAY be overridden</B>.</P>
    *
-   * @param string $sURL Target (sub-)URL
+   * @param string $sURL Target URL
    * @param string $sPath Explorer's path
    * @param string $sDestination Page controller destination (view/action)
    * @param mixed $mPrimaryKey Result set's data primary key (required for any destination other than 'list')
@@ -185,8 +350,14 @@ extends PHP_APE_HTML_Controller
    * @param boolean $bUsedPopup Popup used to open form
    * @return string
    */
-  public function makeRequestURL( $sURL, $sPath = null, $sDestination = null, $mPrimaryKey = null, $amPassthruVariables = null, $asErrors = null, $bUsedPopup = null )
+  public function makeRequestURL( $sURL = null, $sPath = null, $sDestination = null, $mPrimaryKey = null, $amPassthruVariables = null, $asErrors = null, $bUsedPopup = null )
   {
+    // Frameset tag
+    $sURL = PHP_APE_Type_Path::parseValue( $sURL );
+    $sURL = preg_replace( '/&?FRAME=[^&]*/is', null, $sURL );
+    $sURL = ltrim( $sURL, '&' );
+    if( isset( $_GET['FRAME'] ) ) $sURL = PHP_APE_Util_URL::addVariable( $sURL, array( 'FRAME' => 'C' ) );
+
     // Additional passthru variables
     $amPassthruVariables_add = $this->getPassthruVariables( $sPath );
     if( is_array( $amPassthruVariables ) )
@@ -196,6 +367,30 @@ extends PHP_APE_HTML_Controller
 
     // Retrieve URL
     return parent::makeRequestURL( $sURL, $sDestination, $mPrimaryKey, $amPassthruVariables, $asErrors, $bUsedPopup );
+  }
+
+
+  /** Returns the explorer's left-bar URL for the given path and destination (view/action)
+   *
+   * <P><B>USAGE:</B> This methods returns the given URL with the appropriate query parameters,
+   * so the explorer retrieves the appropriate path for display.</P>
+   * <P><B>NOTE:</B> The explorer's path is encrypted, in order to avoid having it supplied from the client
+   * without prior server proposal.</P>
+   * <P><B>INHERITANCE:</B> This method <B>MAY be overridden</B>.</P>
+   *
+   * @param string $sPath Explorer's path
+   * @return string
+   */
+  public function makeLeftBarURL( $sPath = null )
+  {
+    // Frameset tag
+    $sURL = PHP_APE_Util_URL::addVariable( 'index.php', array( 'FRAME' => 'L' ) );
+
+    // Additional passthru variables
+    $amPassthruVariables = $this->getPassthruVariables( $sPath );
+
+    // Retrieve URL
+    return parent::makeRequestURL( $sURL, null, null, $amPassthruVariables );
   }
 
   /** Returns the explorer's passthru variables for the given path
@@ -605,11 +800,11 @@ extends PHP_APE_HTML_Controller
    * METHODS: actions/view
    ********************************************************************************/
 
-  /** Returns this controller's (HTML) frame set
+  /** Returns this controller's (HTML) page
    *
    * @return string
    */
-  public function htmlFrameSet()
+  public function htmlPage()
   {
     // Output
     $sOutput = null;
@@ -623,23 +818,36 @@ extends PHP_APE_HTML_Controller
     $sOutput .= PHP_APE_HTML_SmartTags::htmlCSS();
     $sOutput .= PHP_APE_HTML_Tags::htmlHeadClose();
 
-    // ... FRAMESET
-    $bTopBar_Use = self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.topbar.use' );
-    $iTopBar_Height = self::$roEnvironment->getStaticParameter( 'php_ape.explorer.frameset.topbar.height' );
-    $bSideBar_Use = self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.sidebar.use' );
-    $iSideBar_Width = self::$roEnvironment->getStaticParameter( 'php_ape.explorer.frameset.sidebar.width' );
-    $sOutput .= '<FRAMESET ROWS="'.( $bTopBar_Use ? $iTopBar_Height.',' : null ).'*" BORDER="0">'."\r\n";
-    if( $bTopBar_Use )
-      $sOutput .= '<FRAME CLASS="APE-top" NAME="PHP_APE_Explorer_TopBar" FRAMEBORDER="0" SCROLLING="no" NORESIZE SRC="topbar.php'.($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING']:null).'">'."\r\n";
-    if( $bSideBar_Use ) 
+    // ... PAGE
+    $bUseLeftBar = self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.leftbar.use' );
+    $bShowFrameSet = $bUseLeftBar;
+    $bInFrameSet = false;
+    if( isset( $_GET['FRAME'] ) ) 
     {
-      $sOutput .= '<FRAMESET COLS="'.$iSideBar_Width.',*" BORDER="1">'."\r\n";
-      $sOutput .= '<FRAME CLASS="APE-left" NAME="PHP_APE_Explorer_SideBar" FRAMEBORDER="1" SCROLLING="auto" SRC="sidebar.php'.($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING']:null).'">'."\r\n";
+      $bShowFrameSet = false;
+      switch( $_GET['FRAME'] )
+      {
+      case 'T': $bInFrameSet = true; $sOutput .= $this->htmlTopBar(); break;
+      case 'L': $bInFrameSet = true; $sOutput .= $this->htmlLeftBar(); break;
+      case 'C': $bInFrameSet = true; $sOutput .= $this->htmlContent(); break;
+      default: $bInFrameSet = false;
+      }
     }
-    $sOutput .= '<FRAME CLASS="APE-content" NAME="PHP_APE_Explorer_Content" FRAMEBORDER="0" SCROLLING="auto" SRC="content.php'.($_SERVER['QUERY_STRING']?'?'.$_SERVER['QUERY_STRING']:null).'">'."\r\n";
-    if( $bSideBar_Use ) 
+
+    if( $bShowFrameSet )
+    {
+      $iTopBar_Height = self::$roEnvironment->getStaticParameter( 'php_ape.explorer.frameset.topbar.height' );
+      $iLeftBar_Width = self::$roEnvironment->getStaticParameter( 'php_ape.explorer.frameset.leftbar.width' );
+      $sOutput .= '<FRAMESET ROWS="'.$iTopBar_Height.',*" BORDER="0">'."\r\n";
+      $sOutput .= '<FRAME CLASS="APE-top" NAME="PHP_APE_Explorer_TopBar" FRAMEBORDER="0" SCROLLING="no" NORESIZE SRC="index.php?FRAME=T'.($_SERVER['QUERY_STRING']?'&'.$_SERVER['QUERY_STRING']:null).'">'."\r\n";
+      $sOutput .= '<FRAMESET COLS="'.$iLeftBar_Width.',*" BORDER="1">'."\r\n";
+      $sOutput .= '<FRAME CLASS="APE-left" NAME="PHP_APE_Explorer_LeftBar" FRAMEBORDER="1" SCROLLING="auto" SRC="index.php?FRAME=L'.($_SERVER['QUERY_STRING']?'&'.$_SERVER['QUERY_STRING']:null).'">'."\r\n";
+      $sOutput .= '<FRAME CLASS="APE-content" NAME="PHP_APE_Explorer_Content" FRAMEBORDER="0" SCROLLING="auto" SRC="index.php?FRAME=C'.($_SERVER['QUERY_STRING']?'&'.$_SERVER['QUERY_STRING']:null).'">'."\r\n";
       $sOutput .= '</FRAMESET>'."\r\n";
-    $sOutput .= '</FRAMESET>'."\r\n";
+      $sOutput .= '</FRAMESET>'."\r\n";
+    }
+    elseif( !$bInFrameSet )
+      $sOutput .= $this->htmlContent();
 
     // ... END
     $sOutput .= PHP_APE_HTML_Tags::htmlDocumentClose();
@@ -684,15 +892,12 @@ extends PHP_APE_HTML_Controller
     return $sOutput;
   }
 
-  /** Returns this controller's (HTML) side-bar
+  /** Returns this controller's (HTML) left-bar
    *
    * @return string
    */
-  public function htmlSideBar()
+  public function htmlLeftBar()
   {
-    // Environment
-    $oDataSpace_JavaScript = new PHP_APE_DataSpace_JavaScript();
-
     // Output
     $sOutput = null;
 
@@ -713,53 +918,22 @@ extends PHP_APE_HTML_Controller
     try
     {
       // ... Directory Explorer
-      $bDirectories_Use = self::$roEnvironment->getUserParameter( 'php_ape.explorer.sidebar.directory.use' );
+      $bDirectoryBrowser_Use = self::$roEnvironment->getUserParameter( 'php_ape.explorer.directory.browser.use' );
       $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen( 'WIDTH:100%;', 'WIDTH:100%;' );
-      $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['name.sidebar.directories'], 'M-folder', null, self::$asResources['description.sidebar.directories'], null, true, false, 'H1' );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( self::$asResources['name.leftbar.directories'], 'M-folder', null, self::$asResources['description.leftbar.directories'], null, true, false, 'H1' );
       $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( null, false );
-      $sOutput .= PHP_APE_HTML_Components::htmlControlFrameset( array( 'php_ape.explorer.sidebar.directory.use' ),
-                                                                array( self::$asResources['description.sidebar.directories.use'] ),
-                                                                array( $bDirectories_Use ? 'S-minimize' : 'S-maximize' ),
+      $sOutput .= PHP_APE_HTML_Components::htmlControlFrameset( array( 'php_ape.explorer.directory.browser.use' ),
+                                                                array( self::$asResources['description.leftbar.directories.use'] ),
+                                                                array( $bDirectoryBrowser_Use ? 'S-minimize' : 'S-maximize' ),
                                                                 'self' );
       $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignClose();
+
       // ... content
-      if( $bDirectories_Use )
-      {
-        $sOutput .= '<UL>'."\r\n";
-        // ... parent
-        $sDirectoryName = ltrim( basename( $this->getExplorerPath() ), './' );
-        if( strlen( $sDirectoryName ) > 0 )
-        {
-          $sExplorerPath = ltrim( dirname( $this->getExplorerPath() ), './' );
-          $sURL_SideBar = $this->makeRequestURL( 'sidebar.php', $sExplorerPath );
-          $sURL_Content = $this->makeRequestURL( 'content.php', $sExplorerPath );
-          $sOutput .= '<LI>'.PHP_APE_HTML_Tags::htmlAnchor( "javascript:parent.PHP_APE_Explorer_SideBar.location.replace('".$oDataSpace_JavaScript->encodeData($sURL_SideBar)."');parent.PHP_APE_Explorer_Content.location.href='".$oDataSpace_JavaScript->encodeData($sURL_Content)."';", '..' ).'</LI>'."\r\n";
-        }
-        // ... children
-        if( $this->isReadAuthorized() )
-        {
-          $asDirectoriesPaths = glob( PHP_APE_Util_File_Any::encodePath( $this->getFullPath().'/*' ) );
-          foreach( $asDirectoriesPaths as $sDirectoryPath )
-          {
-            // ... check path
-            if( !is_dir( $sDirectoryPath ) ) continue;
-            if( !is_readable( $sDirectoryPath ) ) continue;
-            $sExplorerPath = $this->getExplorerPath().'/'.PHP_APE_Util_File_Any::decodePath( basename( $sDirectoryPath ) );
-            if( !PHP_APE_Explorer_WorkSpace::useEnvironment()->getStaticParameter( 'php_ape.explorer.auth.noconf' ) and
-                !$this->hasDirectoryParameters( $sExplorerPath ) ) continue;
+      if( $bDirectoryBrowser_Use ) $sOutput .= $this->htmlDirectoryBrowser( true );
 
-            // ... link
-            $sURL_SideBar = $this->makeRequestURL( 'sidebar.php', $sExplorerPath );
-            $sURL_Content = $this->makeRequestURL( 'content.php', $sExplorerPath );
-            $sOutput .= '<LI>'.PHP_APE_HTML_Tags::htmlAnchor( "javascript:parent.PHP_APE_Explorer_SideBar.location.replace('".$oDataSpace_JavaScript->encodeData($sURL_SideBar)."');parent.PHP_APE_Explorer_Content.location.href='".$oDataSpace_JavaScript->encodeData($sURL_Content)."';", basename( $sExplorerPath ) ).'</LI>'."\r\n";
-          }
-        }
-        $sOutput .= '</UL>'."\r\n";
-      }
-
-      // ... Additional side-bar
+      // ... Additional left-bar
       $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
-      $sOutput .= $this->htmlSideBar_Add();
+      $sOutput .= $this->htmlLeftBar_Add();
     }
     catch( PHP_APE_Auth_AuthorizationException $e )
     {
@@ -780,11 +954,11 @@ extends PHP_APE_HTML_Controller
     return $sOutput;
   }
 
-  /** Returns this controller's (HTML) additional side-bar content
+  /** Returns this controller's (HTML) additional left-bar content
    *
    * @return string
    */
-  public function htmlSideBar_Add()
+  public function htmlLeftBar_Add()
   {
     return null;
   }
@@ -799,6 +973,8 @@ extends PHP_APE_HTML_Controller
     $sOutput = null;
 
     // Controller
+    $bUseLeftBar = self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.leftbar.use' );
+    $bIsPopup = $this->isPopup();
     $sDestination = $this->getDestination();
 
     // ... HTML
@@ -817,20 +993,10 @@ extends PHP_APE_HTML_Controller
     $sOutput .= '<SCRIPT TYPE="text/javascript">top.document.title=self.document.title;</SCRIPT>'."\r\n";
     $sOutput .= '<DIV CLASS="APE">'."\r\n";
 
-    // ... Frameset controls
-    $sOutput .= '<DIV STYLE="FLOAT:right;">';
-    $sOutput .= PHP_APE_HTML_Components::htmlControlFrameset( array( 'php_ape.explorer.frameset.sidebar.use', 'php_ape.explorer.frameset.topbar.use' ),
-                                                              array( self::$asResources['description.frameset.sidebar'], self::$asResources['description.frameset.topbar'] ),
-                                                              array( 'S-frameset-left', 'S-frameset-top' ) );
-    $sOutput .= '</DIV>'."\r\n";
+    // ... Header
+    if( !$bUseLeftBar and !$bIsPopup ) $sOutput .= $this->htmlHeader( $bFormatForPrint );
 
     // ... Title
-    if( empty( $sDestination ) or $sDestination == 'list' )
-    {
-      $sOutput .= '<DIV CLASS="do-not-print" STYLE="FLOAT:right;PADDING:2px;">'."\r\n";
-      $sOutput .= PHP_APE_HTML_Components::htmlAuthentication();
-      $sOutput .= '</DIV>'."\r\n";
-    }
     $sOutput .= '<DIV STYLE="FLOAT:left;PADDING:2px;">'."\r\n";
     $sOutput .= $this->htmlTitle();
     $sOutput .= '</DIV>'."\r\n";
@@ -855,7 +1021,7 @@ extends PHP_APE_HTML_Controller
 
 
     // ... Footer
-    $sOutput .= $this->htmlFooter();
+    if( !$bIsPopup ) $sOutput .= $this->htmlFooter();
 
     // ... END
     $sOutput .= '</DIV>'."\r\n";

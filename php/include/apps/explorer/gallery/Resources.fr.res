@@ -1,9 +1,5 @@
 # (French version)
 # GUI Data
-Label.Folders = "Dossiers"
-Tooltip.Folders = "Affichez le navigateur de sous-dossiers"
-Label.Images = "Images"
-Tooltip.Images = "Visualisez uniquement les images (cachez le navigateur de sous-dossiers)"
 Label.Browse = "Naviguer"
 Tooltip.Browse = "Naviguez au travers des images du dossier courant"
 Label.First = "Première"

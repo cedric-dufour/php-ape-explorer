@@ -237,6 +237,14 @@ extends PHP_APE_Explorer_Controller
 
     default:
     case 'list':
+      // Directory browser
+      if( !self::$roEnvironment->getUserParameter( 'php_ape.explorer.frameset.leftbar.use' ) and
+          self::$roEnvironment->getUserParameter( 'php_ape.explorer.directory.browser.use' ) )
+      {
+        $sOutput .= $this->htmlDirectoryBrowser();
+        $sOutput .= PHP_APE_HTML_SmartTags::htmlSeparator();
+      }
+
       // Database object
       $oView = new PHP_APE_Explorer_File_list();
       $oFilter = new PHP_APE_Data_Filter( 'FileFilter', new PHP_APE_Data_FilterCriteria( 'mode', 'd', PHP_APE_Data_LogicalOperator::NNot | PHP_APE_Data_ComparisonOperator::Proportional ) );
