@@ -3,7 +3,7 @@
   <TD STYLE="VERTICAL-ALIGN:top;"><INPUT TYPE="checkbox" NAME="__PK" VALUE="{$Entry.PrimaryKey|escape}" /></TD>
   {if $Display.image}<TD STYLE="PADDING-LEFT:5px;">{$Output.image}</TD>{/if}
   <TD STYLE="WIDTH:95%;PADDING-LEFT:5px;VERTICAL-ALIGN:top;">
-    <H3>{if $Value.iptc_name}{$Output.iptc_name} ({$Output.name}){else}{$Output.name}{/if}{if $Entry.AuthorizedDetail} - <A HREF="javascript:;" ONCLICK="javascript:PHP_APE_DR_BasicList_do('{$Global.RID}','detail','{$Entry.PrimaryKey|escape}');">zoom</A>{/if}</H3>
+    <H3>{if $Value.iptc_name}{$Output.iptc_name} ({$Output.name}){else}{$Output.name}{/if}{if $Entry.AuthorizedDetail} - <A HREF="javascript:;" ONCLICK="javascript:PHP_APE_DR_BasicList_do('{$Global.RID}','detail','{$Entry.PrimaryKey|escape}',true,false);">zoom</A>{/if}</H3>
     <P>
     {if ( $Display.iptc_author && ( $Value.iptc_author || !$Global.HideEmpty ) ) || ( $Display.iptc_copyright && ( $Value.iptc_copyright || !$Global.HideEmpty ) ) }
     {if $Display.iptc_author && ( $Value.iptc_author || !$Global.HideEmpty )}{$Output.iptc_author}{/if}
