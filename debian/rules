@@ -47,7 +47,8 @@ install: build
 	find debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html -type f -exec fgrep -q '@version@' {} \; -exec sed -i "s/@version@/$(DEB_UPSTREAM_VERSION)/g" {} \;
 	./util/fixperm -d debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html
 	mkdir -p debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/examples
-	cp etc/php-ape.explorer.conf.php-sample debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/examples/php-ape.explorer.conf.php
+	cp etc/php-ape.conf.php-sample debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/examples/php-ape.conf.php
+	cp etc/apache.conf-sample debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/examples/apache.conf
 
 # Build architecture-dependent files here.
 binary-arch: build install

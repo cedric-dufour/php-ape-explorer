@@ -1,0 +1,8 @@
+# WARNING: those settings MUST be merged with those of PHP-APE
+
+# Enable PHP-APE Explorer
+Alias /php-ape/explorer "/usr/share/php-ape/php/htdocs/apps/explorer"
+
+# When unspecified, jump to PHP-APE *File* Explorer
+RedirectMatch /php-ape/explorer/$ /php-ape/explorer/file/
+
