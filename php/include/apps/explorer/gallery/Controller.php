@@ -64,7 +64,7 @@ extends PHP_APE_Explorer_Image_Controller
     // Output
     $sOutput = null;
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignOpen();
-    $sOutput .= PHP_APE_HTML_SmartTags::htmlIcon( 'S-control', null, null, null, true );
+    $sOutput .= PHP_APE_HTML_SmartTags::htmlIcon( 'S-control', null, null, null, false );
     $sOutput .= PHP_APE_HTML_SmartTags::htmlAlignAdd( 'PADDING-LEFT:2px !important;', false );
 
     // ... Directory browser
