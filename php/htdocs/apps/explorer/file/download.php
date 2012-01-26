@@ -39,6 +39,7 @@ require_once( PHP_APE_ROOT.'/apps/explorer/load.php' );
 $amParameters = PHP_APE_Explorer_Controller::getDownloadParameters();
 $sFilePath = PHP_APE_Util_File_Any::encodePath( $amParameters['path'] );
 $sFileName = array_key_exists( 'as', $amParameters ) ? $amParameters['as'] : basename( $amParameters['path'] );
+if( $sFileName == PHP_APE_EXPLORER_CONF ) exit;
 
 // HTTP
 PHP_APE_Util_BrowserControl::noCache( filemtime( $sFilePath ) );

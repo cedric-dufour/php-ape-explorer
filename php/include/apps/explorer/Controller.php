@@ -554,7 +554,7 @@ extends PHP_APE_HTML_Controller
    */
   final private function __getDirectoryParametersFilepath( $sPath = null )
   {
-    return PHP_APE_Util_File_Any::encodePath( $this->getFullPath( $sPath ).'/.php-ape.explorer.conf.php' );
+    return PHP_APE_Util_File_Any::encodePath( $this->getFullPath( $sPath ).'/'.PHP_APE_EXPLORER_CONF );
   }
 
   /** Loads the directory parameters

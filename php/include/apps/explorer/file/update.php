@@ -64,7 +64,9 @@ extends PHP_APE_Explorer_File_function
   {
     
     $roController =& PHP_APE_Explorer_WorkSpace::useFileController();
-    $sFilePath = PHP_APE_Util_File_Any::encodePath( $roController->getFullPath().'/'.$this->useArgumentSet()->useElementByID( 'name' )->useContent()->getValue() );
+    $sFileName = $this->useArgumentSet()->useElementByID( 'name' )->useContent()->getValue();
+    if( $sFileName == PHP_APE_EXPLORER_CONF ) return false;
+    $sFilePath = PHP_APE_Util_File_Any::encodePath( $roController->getFullPath().'/'.$sFileName );
     return $roController->isUpdateAuthorized() && is_writable( $sFilePath );
   }
 
@@ -99,7 +101,11 @@ extends PHP_APE_Explorer_File_function
         if( !is_null( $sFileExtension_old ) ) // add extension of old name
           $sFileName_new = $sFileName_new.'.'.$sFileExtension_old;
 
-         // ... check existency
+        // ... check file name
+        if( $sFileName_old == PHP_APE_EXPLORER_CONF or $sFileName_new == PHP_APE_EXPLORER_CONF )
+          throw new PHP_APE_Explorer_File_Exception( __METHOD__, $asResources['error.update'] );
+
+        // ... check existency
         $sFilePath_new = PHP_APE_Util_File_Any::encodePath( $roController->getFullPath().'/'.$sFileName_new );
         if( file_exists( $sFilePath_new ) )
         {

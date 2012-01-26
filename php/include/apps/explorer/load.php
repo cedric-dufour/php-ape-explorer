@@ -32,6 +32,10 @@
  * CORE RESOURCES
  ********************************************************************************/
 
+if( !defined( 'PHP_APE_EXPLORER_CONF' ) )
+/** Configuration file name */
+  define( 'PHP_APE_EXPLORER_CONF', '.php-ape.explorer.conf.php' );
+
 /** Core resources: workspace */
 require_once( PHP_APE_ROOT.'/apps/explorer/WorkSpace.php' );
 

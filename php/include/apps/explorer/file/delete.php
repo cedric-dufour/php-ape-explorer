@@ -60,7 +60,9 @@ extends PHP_APE_Explorer_File_function
   public function hasAuthorization()
   {
     $roController =& PHP_APE_Explorer_WorkSpace::useFileController();
-    $sFilePath = PHP_APE_Util_File_Any::encodePath( $roController->getFullPath().'/'.$this->useArgumentSet()->useElementByID( 'name' )->useContent()->getValue() );
+    $sFileName = $this->useArgumentSet()->useElementByID( 'name' )->useContent()->getValue();
+    if( $sFileName == PHP_APE_EXPLORER_CONF ) return false;
+    $sFilePath = PHP_APE_Util_File_Any::encodePath( $roController->getFullPath().'/'.$sFileName );
     return $roController->isDeleteAuthorized() && is_writable( $sFilePath );
   }
 
@@ -81,7 +83,10 @@ extends PHP_APE_Explorer_File_function
     {
       // ... delete
       $roArgumentSet =& $this->useArgumentSet();
-      $sFilePath = PHP_APE_Util_File_Any::encodePath( $roController->getFullPath().'/'.$roArgumentSet->useElementByID( 'name' )->useContent()->getValue() );
+      $sFileName = $roArgumentSet->useElementByID( 'name' )->useContent()->getValue();
+      if( $sFileName == PHP_APE_EXPLORER_CONF )
+        throw new PHP_APE_Explorer_File_Exception( __METHOD__, $asResources['error.delete'] );
+      $sFilePath = PHP_APE_Util_File_Any::encodePath( $roController->getFullPath().'/'.$sFileName );
       if( !( is_dir( $sFilePath ) ? @rmdir( $sFilePath ) : unlink( $sFilePath ) ) )
         throw new PHP_APE_Explorer_File_Exception( __METHOD__, $asResources['error.delete'] );
 

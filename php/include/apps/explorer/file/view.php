@@ -80,19 +80,20 @@ implements PHP_APE_Data_hasAuthorization, PHP_APE_HTML_hasOutputHandler, PHP_APE
     if( $mKey == 'name' )
     {
       // ... file
-      $sFileBasename = $this->getBasename();
-      $sFilePath = PHP_APE_Util_File_Any::encodePath( $this->getDirectoryPath().'/'.$sFileBasename );
+      $sFileName = $this->getBasename();
+      $sFilePath = PHP_APE_Util_File_Any::encodePath( $this->getDirectoryPath().'/'.$sFileName );
+      if( $sFileName == PHP_APE_EXPLORER_CONF ) return null;
 
       // ... hyperlink
       if( !is_dir( $sFilePath ) )
-        $sURL = $roController->makeDownloadURL( $sFileBasename );
+        $sURL = $roController->makeDownloadURL( $sFileName );
       else
       {
-        $sExplorerPath = $roController->getExplorerPath().'/'.$sFileBasename;
+        $sExplorerPath = $roController->getExplorerPath().'/'.$sFileName;
         if( !PHP_APE_Explorer_WorkSpace::useEnvironment()->getStaticParameter( 'php_ape.explorer.auth.noconf' ) and
             !$roController->hasDirectoryParameters( $sExplorerPath ) )
           return null;
-        $sURL = $roController->makeRequestURL( 'content.php', $sExplorerPath, 'list' );
+        $sURL = $roController->makeRequestURL( 'index.php', $sExplorerPath, 'list' );
       }
       return PHP_APE_HTML_Tags::htmlAnchor( $sURL, $this->useElement( 'name' )->useContent()->getValue() );
     }
@@ -137,7 +138,7 @@ implements PHP_APE_Data_hasAuthorization, PHP_APE_HTML_hasOutputHandler, PHP_APE
 
   public function isUpdateAuthorized()
   {
-    return PHP_APE_Explorer_WorkSpace::useFileController()->isUpdateAuthorized() && is_writable( PHP_APE_Util_File_Any::encodePath( $this->getDirectoryPath().'/'.$this->getBasename() ) );
+    return PHP_APE_Explorer_WorkSpace::useFileController()->isUpdateAuthorized() && $this->getBasename() != PHP_APE_EXPLORER_CONF && is_writable( PHP_APE_Util_File_Any::encodePath( $this->getDirectoryPath().'/'.$this->getBasename() ) );
   }
 
 
@@ -152,7 +153,7 @@ implements PHP_APE_Data_hasAuthorization, PHP_APE_HTML_hasOutputHandler, PHP_APE
 
   public function isDeleteAuthorized()
   {
-    return PHP_APE_Explorer_WorkSpace::useFileController()->isDeleteAuthorized() && is_writable( PHP_APE_Util_File_Any::encodePath( $this->getDirectoryPath().'/'.$this->getBasename() ) );
+    return PHP_APE_Explorer_WorkSpace::useFileController()->isDeleteAuthorized() && $this->getBasename() != PHP_APE_EXPLORER_CONF && is_writable( PHP_APE_Util_File_Any::encodePath( $this->getDirectoryPath().'/'.$this->getBasename() ) );
   }
 
 }

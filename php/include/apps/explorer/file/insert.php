@@ -107,6 +107,10 @@ extends PHP_APE_Explorer_File_function
       else
         $sFileName_new = $sFileName_old;
 
+      // ... check file name
+      if( $sFileName_new == PHP_APE_EXPLORER_CONF )
+        throw new PHP_APE_Explorer_File_Exception( __METHOD__, $asResources['error.insert'] );
+
       // ... check existency
       $sFilePath_new = PHP_APE_Util_File_Any::encodePath( $roController->getFullPath().'/'.$sFileName_new );
       if( file_exists( $sFilePath_new ) )
