@@ -9,9 +9,10 @@ Architecture: all
 Depends: php-ape, php5-gd
 Recommends: smarty
 Description: PHP-APE Explorer
- The PHP-APE Explorer Application allows one to easily grant read and/or write
- access to a given directory (and its sub-directories) on the host filesystem
- and thus implement a simple web-based file or image explorer.
+ Actual application based on the PHP Application Programming Environment 
+ (PHP-APE), PHP-APE Explorer implements a simple web-based file or image
+ explorer, which allows to easily grant read and/or write access to a given
+ directory (and its sub-directories) on the host filesystem.
 
 Package: php-ape-explorer-doc
 Architecture: all

@@ -1,0 +1,233 @@
+<refentry id="{@id}">
+
+<refnamediv>
+<refname>PHP-APE Explorer</refname>
+<refpurpose>A web-based file and image explorer</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+<author>
+Cedric Dufour
+<authorblurb>{@link http://www.ced-network.net/php-ape/explorer http://www.ced-network.net/php-ape/explorer}</authorblurb>
+</author>
+</refsynopsisdiv>
+
+<graphic fileref="php-ape-explorer.png" />
+
+{@toc}
+
+<refsect1 id="{@id whatis}">
+<title>What is PHP-APE Explorer ?</title>
+<para>Actual application based on the {@link http://www.ced-network.net/php-ape PHP Application Programming Environment (PHP-APE)}, <firstterm>PHP-APE Explorer</firstterm> implements a simple web-based file or image explorer, which allows to easily grant read and/or write access to a given directory (and its sub-directories) on the host filesystem.</para>
+</refsect1>
+
+
+<refsect1 id="{@id licence}">
+<title>Licensing</title>
+<para>PHP-APE Explorer comes as an extension to the PHP Application Programming Environment (PHP-APE) and is covered by the same copyright.</para>
+<para>The PHP Application Programming Environment (PHP-APE) is distributed under the <emphasis>GNU General Public Licence (GPL) Version 2</emphasis>. The PHP Application Programming Environment (PHP-APE) includes all resources which contain the mention <literal>PHP Application Programming Environment (PHP-APE)</literal> in their documentation and licensing preamble.</para>
+<para>Other Open Source resources may come bundled with the PHP Application Programming Environment (PHP-APE) release packaging; they are (and must be) used according to their original licence (look for copyright-related files in the folder hierarchy).</para>
+</refsect1>
+
+
+<refsect1 id="{@id download}">
+<title>Downloading</title>
+<para>{@link https://github.com/cedric-dufour/php-ape-explorer/downloads download tree...}</para>
+</refsect1>
+
+
+<refsect1 id="{@id build}">
+<title>Build</title>
+<para><emphasis>NOTE:</emphasis> By &quot;build&quot;, we mean create the necessary tarballs/package required for installation (according to the INSTALL section below) or distribution.</para>
+
+<refsect2 id="{@id build_tree}">
+<title>[MUST] Obtain the source tarball</title>
+<screen>
+<![CDATA[
+$ tar -xjf php-ape-explorer-source-@version@.tar.bz2
+$ cd php-ape-explorer-@version@
+]]>
+</screen>
+</refsect2>
+
+<refsect2 id="{@id build_source}">
+<title>[MAY] (Re-)build the source tarball</title>
+<screen>
+<![CDATA[
+$ ./debian/rules build-source-tarball
+$ ls -al ../php-ape-explorer-source-@version@.tar.bz2
+]]>
+</screen>
+</refsect2>
+
+<refsect2 id="{@id build_install}">
+<title>[MAY] Build the installation (release) tarball</title>
+<screen>
+<![CDATA[
+$ ./debian/rules build-install-tarball
+$ ls -al ../php-ape-explorer-@version@.tar.bz2
+]]>
+</screen>
+</refsect2>
+
+<refsect2 id="{@id build_doc}">
+<title>[MAY] Build the documentation tarball</title>
+<screen>
+<![CDATA[
+$ ./debian/rules build-doc-tarball
+$ ls -al ../php-ape-explorer-doc-@version@.tar.bz2
+]]>
+</screen>
+</refsect2>
+
+<refsect2 id="{@id build_debian}">
+<title>[MAY] Build the debian packages</title>
+<screen>
+<![CDATA[
+$ debuild -us -uc -b
+$ ls -al ../php-ape-explorer*_@version@_all.deb
+]]>
+</screen>
+</refsect2>
+
+<refsect2 id="{@id build_debian_source}">
+<title>[MAY] Build the debian source package</title>
+<screen>
+<![CDATA[
+$ debuild -I'.git*' -us -uc -S
+$ ls -al ../php-ape-explorer_@version@.dsc ../php-ape-explorer_@version@.tar.gz
+]]>
+</screen>
+</refsect2>
+
+<refsect2 id="{@id build_all}">
+<title>[SHOULD] Do it all with a single command</title>
+<screen>
+<![CDATA[
+$ ./debian/rules release
+]]>
+</screen>
+</refsect2>
+
+</refsect1>
+
+
+<refsect1 id="{@id install}">
+<title>Installation</title>
+<para><emphasis>WARNING: PHP-APE Explorer is actively maintained on Linux. It has not been tested on Windows.</emphasis></para>
+<para><emphasis>NOTE:</emphasis> We assume a previously working PHP-APE setup.</para>
+
+<refsect2 id="{@id install_php}">
+<title>[MUST] Install PHP-APE Explorer</title>
+
+<refsect3 id="{@id install_php_release}">
+<title>[OR] using the release tarball</title>
+<screen>
+<![CDATA[
+$ INSTALL_DIR='<installation-directory>'
+$ cd "${INSTALL_DIR}"
+$ tar -xjf php-ape-explorer-@version@.tar.bz2
+]]>
+</screen>
+</refsect3>
+
+<refsect3 id="{@id install_php_debian}">
+<title>[OR] using the debian package</title>
+<screen>
+<![CDATA[
+$ dpkg -i php-ape-explorer*_@version@_all.deb
+]]>
+</screen>
+</refsect3>
+
+</refsect2>
+
+</refsect1>
+
+<refsect1 id="{@id install_contd}">
+<title>(cont'd)</title> <!-- an horrible hack to circumvent a bug in PhpDocumentor docbook parsing -->
+
+<refsect2 id="{@id install_doc}">
+<title>[MAY] Install PHP-APE Explorer Documentation</title>
+
+<refsect3 id="{@id install_doc_release}">
+<title>[OR] using the documentation tarball</title>
+<screen>
+<![CDATA[
+$ DOC_DIR='<documentation-directory>'
+$ cd "${DOC_DIR}"
+$ tar -xjf php-ape-explorer-doc-@version@.tar.bz2
+]]>
+</screen>
+</refsect3>
+
+<refsect3 id="{@id install_doc_debian}">
+<title>[OR] using the debian package</title>
+<screen>
+<![CDATA[
+$ dpkg -i php-ape-explorer-doc_@version@_all.deb
+]]>
+</screen>
+</refsect3>
+
+<refsect3 id="{@id install_doc_source}">
+<title>[OR] using the source tarball (and PhpDocumentor)</title>
+<screen>
+<![CDATA[
+$ DOC_DIR='<documentation-directory>'
+$ pear install -o PhpDocumentor
+$ tar -xjf php-ape-explorer-source-@version@.tar.bz2
+$ cd php-ape-explorer-@version@
+$ ./util/makedoc PHP_APE_Explorer "PHP-APE Explorer" "${DOC_DIR}" php doc/phpdoc
+]]>
+</screen>
+</refsect3>
+
+</refsect2>
+
+</refsect1>
+
+
+<refsect1 id="{@id configure}">
+<title>Configuration</title>
+<para><emphasis>NOTE:</emphasis> PHP-APE Explorer being an extension of the PHP Application Programming Environment (PHP-APE), its configuration must be merged with that of PHP-APE.</para>
+
+<refsect2 id="{@id configure_apache}">
+<title>Apache configuration</title>
+<para><literal>/etc/php-ape/apache.conf</literal>:</para>
+<screen>
+<![CDATA[
+# WARNING: those settings MUST be merged with those of PHP-APE
+
+# Enable PHP-APE Explorer
+Alias /php-ape/explorer "/usr/share/php-ape/php/htdocs/apps/explorer"
+
+# When unspecified, jump to PHP-APE *File* Explorer
+RedirectMatch /php-ape/explorer/$ /php-ape/explorer/file/
+]]>
+</screen>
+</refsect2>
+
+<refsect2 id="{@id configure_phpape}">
+<title>PHP-APE configuration</title>
+<para><literal>/etc/php-ape/php-ape.conf.php</literal>:</para>
+<screen>
+<![CDATA[
+<?php
+# Explorer's root data (server) path
+# WARNING: You MUST define this setting!
+# DEFAULT: $_CONFIG['php_ape.explorer.data.path'] = null;
+]]>
+</screen>
+<para>Please refer to <literal>/usr/share/doc/php-ape-explorer/examples/php-ape.conf.php</literal> for the list of all possible PHP-APE Explorer configuration parameters.</para>
+</refsect2>
+
+</refsect1>
+
+
+<refsect1 id="{@id usage}">
+<title>Further documentation</title>
+<para>The full development documentation of PHP-APE Explorer (including source code) is part of this (phpDocumentor-generated) HTML documentation; make sure to browse through the expandable tree located on the left of this text.</para>
+</refsect1>
+
+</refentry> 

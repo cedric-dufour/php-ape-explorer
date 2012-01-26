@@ -1,5 +1,5 @@
-PHP Application Programming Environment (PHP-APE)
-=================================================
+PHP-APE Explorer
+================
 
 NOTE: For the sake of clarity, we will assume a Linux (Debian) environment.
 
@@ -89,11 +89,11 @@ NOTE: We assume a previously working PHP-APE setup.
       BASH: pear install -o PhpDocumentor
       BASH: tar -xjf php-ape-explorer-source-@version@.tar.bz2
       BASH: cd php-ape-explorer-source-@version@
-      BASH: ./util/makedoc PHP_APE_Explorer "PHP-APE Explorer" "${DOC_DIR}" php
+      BASH: ./util/makedoc PHP_APE_Explorer "PHP-APE Explorer" "${DOC_DIR}" php doc/phpdoc
 
 
 CONFIGURATION AND USAGE
 -----------------------
 
-Please refer to configuration examples in the documentation resources.
+Please refer to the HTML (PhpDocumentor) documentation.
 

@@ -43,7 +43,7 @@ install: build
 	
 	# ... DEB_PACKAGE_DOC
 	mkdir -p debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html
-	./util/makedoc PHP_APE_Explorer "PHP-APE Explorer" debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html php #doc/phpdoc
+	./util/makedoc PHP_APE_Explorer "PHP-APE Explorer" debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html php doc/phpdoc
 	find debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html -type f -exec fgrep -q '@version@' {} \; -exec sed -i "s/@version@/$(DEB_UPSTREAM_VERSION)/g" {} \;
 	./util/fixperm -d debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html
 	mkdir -p debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/examples
