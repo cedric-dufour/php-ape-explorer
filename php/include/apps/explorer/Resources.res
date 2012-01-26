@@ -1,12 +1,12 @@
 # GUI Data
-Title = "PHP-APE Explorer"
+Title = "(root)"
 
 Name.FrameSet.LeftBar = "Left bar"
 Description.FrameSet.LeftBar = "Enable/disable left bar"
 
-Name.LeftBar.Directories = "Directories"
-Description.LeftBar.Directories = "Browse sub-directories"
-Description.LeftBar.Directories.Use = "Enable/disable directory browser"
+Name.LeftBar.Directories = "Folders"
+Description.LeftBar.Directories = "Browse sub-folders"
+Description.LeftBar.Directories.Use = "Enable/disable sub-folders browser"
 
 Label.Preferences.Directory.Browser = "Folders"
 Tooltip.Preferences.Directory.Browser = "Show sub-folders browser"

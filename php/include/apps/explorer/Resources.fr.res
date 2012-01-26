@@ -1,13 +1,13 @@
 # (French version)
 # GUI Data
-Title = "Explorateur PHP-APE"
+Title = "(racine)"
 
 Name.FrameSet.LeftBar = "Menu latéral"
 Description.FrameSet.LeftBar = "Activez/désactivez le menu latéral"
 
-Name.LeftBar.Directories = "Répertoires"
-Description.LeftBar.Directories = "Parcourez les sous-répertoires"
-Description.LeftBar.Directories.Use = "Activez/désactivez le navigateur de répertoire"
+Name.LeftBar.Directories = "Dossiers"
+Description.LeftBar.Directories = "Parcourez les sous-dossiers"
+Description.LeftBar.Directories.Use = "Activez/désactivez le navigateur de sous-dossiers"
 
 Label.Preferences.Directory.Browser = "Dossiers"
 Tooltip.Preferences.Directory.Browser = "Affichez le navigateur de sous-dossiers"
