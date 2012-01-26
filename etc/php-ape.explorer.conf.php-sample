@@ -1,0 +1,152 @@
+<?php // INDENTING (emacs/vi): -*- mode:php; tab-width:2; c-basic-offset:2; intent-tabs-mode:nil; -*- ex: set tabstop=2 expandtab:
+# PHP Application Programming Environment (PHP-APE)
+# Copyright (C) 2005-2006 Cédric Dufour
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+
+# PHP-APE Explorer Configuration File
+# ================================================================================
+#
+# This file contains the PHP-APE Explorer configuration parameters, which you should adapt
+# to  may to match your requirements.
+#
+# All configuration parameters may be overriden in each (sub-)directory by creating a
+# '.php-ape.explorer.conf.php' file with the required (overriding) settings.
+#
+# Feel free to add as many comments as you want, for this file is included (and cached)
+# only when modified.
+
+
+# PHP-APE Explorer Settings
+# -------------------------
+
+# Default title
+# DEFAULT: $_CONFIG['php_ape.explorer.title'] = null;
+
+# Explorer's root HTML documents URL
+# DEFAULT: $_CONFIG['php_ape.explorer.htdocs.url'] = '/php-ape/apps/explorer';
+
+# File explorer's root HTML documents URL
+# DEFAULT: $_CONFIG['php_ape.explorer.file.htdocs.url'] = $_CONFIG['php_ape.explorer.htdocs.url'].'/file';
+
+# Image explorer's root HTML documents URL
+# DEFAULT: $_CONFIG['php_ape.explorer.image.htdocs.url'] = $_CONFIG['php_ape.explorer.htdocs.url'].'/image';
+
+# Explorer's root data (server) path
+# WARNING: You MUST define this setting!
+# DEFAULT: $_CONFIG['php_ape.explorer.data.path'] = null;
+
+# Files (basename) filtering regular expression
+# DEFAULT: $_CONFIG['php_ape.explorer.data.filter'] = null;
+
+# Authorize access to directory with missing configuration file
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.noconf'] = false;
+
+# Grant read permission to any user
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.read.any'] = false;
+
+# Grant read permission to user/group matching directory name
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.read.dirmatch'] = false;
+
+# Read authorized users
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.read.users'] = array();
+
+# Read authorized groups
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.read.groups'] = array();
+
+# Grant insert permission to any user
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.insert.any'] = false;
+
+# Grant insert permission to user/group matching directory name
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.insert.dirmatch'] = false;
+
+# Insert authorized users
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.insert.users'] = array();
+
+# Insert authorized groups
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.insert.groups'] = array();
+
+# Grant update permission to any user
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.update.any'] = false;
+
+# Grant update permission to user/group matching directory name
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.update.dirmatch'] = false;
+
+# Update authorized users
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.update.users'] = array();
+
+# Update authorized groups
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.update.groups'] = array();
+
+# Grant delete permission to any user
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.delete.any'] = false;
+
+# Grant delete permission to user/group matching directory name
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.delete.dirmatch'] = false;
+
+# Delete authorized users
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.delete.users'] = array();
+
+# Delete authorized groups
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.delete.groups'] = array();
+
+# Grant image download permission to any user
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.image.download.any'] = false;
+
+# Grant image download permission to user/group matching directory name
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.image.download.dirmatch'] = false;
+
+# Image download authorized users
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.image.download.users'] = array();
+
+# Image download authorized groups
+# DEFAULT: $_CONFIG['php_ape.explorer.auth.image.download.groups'] = array();
+
+# File's data page controller
+# DEFAULT: $_CONFIG['php_ape.explorer.file.controller'] = 'PHP_APE_Explorer_File_Controller';
+
+# Image's data page controller
+# DEFAULT: $_CONFIG['php_ape.explorer.image.controller'] = 'PHP_APE_Explorer_Image_Controller';
+
+# Image (maximum) size in list view [pixels]
+# DEFAULT: $_CONFIG['php_ape.explorer.image.size.list'] = 50;
+
+# Choosable image (maximum) size(s) in detail view [pixels]
+# DEFAULT: $_CONFIG['php_ape.explorer.image.size.detail.choices'] = array( 400 );
+
+# Image (maximum) size in detail view [pixels]
+# DEFAULT: $_CONFIG['php_ape.explorer.image.size.detail'] = 400;
+
+# Image (maximum) size in thumbnail [pixels]
+# DEFAULT: $_CONFIG['php_ape.explorer.image.size.thumbnail'] = 100;
+
+# Use thumbnail in list view
+# DEFAULT: $_CONFIG['php_ape.explorer.image.thumbnail.list.use'] = false;
+
+# Use thumbnail in detail view
+# DEFAULT: $_CONFIG['php_ape.explorer.image.thumbnail.detail.use'] = false;
+
+# Frameset top-bar's dimension (height) [pixels]
+# DEFAULT: $_CONFIG['php_ape.explorer.frameset.topbar.height'] = 90;
+
+# Frameset left-bar's usage
+# DEFAULT: $_CONFIG['php_ape.explorer.frameset.leftbar.use'] = true;
+
+# Frameset left-bar's dimension (width) [pixels]
+# DEFAULT: $_CONFIG['php_ape.explorer.frameset.leftbar.width'] = 180;
+
+# Directory browser usage
+# DEFAULT: $_CONFIG['php_ape.explorer.directory.browser.use'] = true;

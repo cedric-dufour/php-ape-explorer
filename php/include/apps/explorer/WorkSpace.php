@@ -30,39 +30,39 @@
  * <P><B>USAGE:</B></P>
  * <P>The following static parameters (properties) are provisioned by this workspace:</P>
  * <UL>
- * <LI><SAMP>php_ape.explorer.title</SAMP>: explorer's title [default: <SAMP>null</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.htdocs.url</SAMP>: explorer's root HTML documents URL [default: <SAMP>http://localhost/php-ape/apps/explorer</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.title</SAMP>: default title [default: <SAMP>null</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.htdocs.url</SAMP>: explorer's root HTML documents URL [default: <SAMP>/php-ape/apps/explorer</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.file.htdocs.url</SAMP>: file explorer's root HTML documents URL [default: <SAMP>php_ape.explorer.htdocs.url</SAMP>.'/file']</LI>
  * <LI><SAMP>php_ape.explorer.image.htdocs.url</SAMP>: image explorer's root HTML documents URL [default: <SAMP>php_ape.explorer.htdocs.url</SAMP>.'/image']</LI>
- * <LI><SAMP>php_ape.explorer.data.path</SAMP>: explorer's root data (server) path [default: <SAMP>null</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.data.path</SAMP>: root data (server) path [default: <SAMP>null</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.data.filter</SAMP>: files (basename) filtering regular expression [default: <SAMP>null</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.auth.noconf</SAMP>: authorize access to directory with missing configuration file [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.read.any</SAMP>: grant read-permission to any user [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.read.dirmatch</SAMP>: grant read-permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.read.users</SAMP>: read-authorized users [default: <SAMP>array()</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.read.groups</SAMP>: read-authorized groups [default: <SAMP>array()</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.insert.any</SAMP>: grant insert-permission to any user [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.insert.dirmatch</SAMP>: grant insert-permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.insert.users</SAMP>: insert-authorized users [default: <SAMP>array()</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.insert.groups</SAMP>: insert-authorized groups [default: <SAMP>array()</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.update.any</SAMP>: grant update-permission to any user [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.update.dirmatch</SAMP>: grant update-permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.update.users</SAMP>: update-authorized users [default: <SAMP>array()</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.update.groups</SAMP>: update-authorized groups [default: <SAMP>array()</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.delete.any</SAMP>: grant delete-permission to any user [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.delete.dirmatch</SAMP>: grant delete-permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.delete.users</SAMP>: delete-authorized users [default: <SAMP>array()</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.delete.groups</SAMP>: delete-authorized groups [default: <SAMP>array()</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.image.download.any</SAMP>: grant image-download-permission to any user [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.image.download.dirmatch</SAMP>: grant image-download-permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.image.download.users</SAMP>: image-download-authorized users [default: <SAMP>array()</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.auth.image.download.groups</SAMP>: image-download-authorized groups [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.read.any</SAMP>: grant read permission to any user [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.read.dirmatch</SAMP>: grant read permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.read.users</SAMP>: read authorized users [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.read.groups</SAMP>: read authorized groups [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.insert.any</SAMP>: grant insert permission to any user [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.insert.dirmatch</SAMP>: grant insert permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.insert.users</SAMP>: insert authorized users [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.insert.groups</SAMP>: insert authorized groups [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.update.any</SAMP>: grant update permission to any user [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.update.dirmatch</SAMP>: grant update permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.update.users</SAMP>: update authorized users [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.update.groups</SAMP>: update authorized groups [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.delete.any</SAMP>: grant delete permission to any user [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.delete.dirmatch</SAMP>: grant delete permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.delete.users</SAMP>: delete authorized users [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.delete.groups</SAMP>: delete authorized groups [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.image.download.any</SAMP>: grant image download permission to any user [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.image.download.dirmatch</SAMP>: grant image download permission to user/group matching directory name [default: <SAMP>false</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.image.download.users</SAMP>: image download authorized users [default: <SAMP>array()</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.auth.image.download.groups</SAMP>: image download authorized groups [default: <SAMP>array()</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.file.controller</SAMP>: file's data page controller [default: '<SAMP>PHP_APE_Explorer_File_Controller</SAMP>']</LI>
  * <LI><SAMP>php_ape.explorer.image.controller</SAMP>: image's data page controller [default: '<SAMP>PHP_APE_Explorer_Image_Controller</SAMP>']</LI>
- * <LI><SAMP>php_ape.explorer.image.size.list</SAMP>: image (maximum) size in list view [default: <SAMP>50</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.image.size.detail.choices</SAMP>: choosable image (maximum) size(s) in detail view [default: <SAMP>array( 400 )</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.image.size.detail</SAMP>: image (maximum) size in detail view [default: <SAMP>400</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.image.size.thumbnail</SAMP>: image (maximum) size in thumbnail [default: <SAMP>100</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.image.size.list</SAMP>: image (maximum) size in list view [pixels; default: <SAMP>50</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.image.size.detail.choices</SAMP>: choosable image (maximum) size(s) in detail view [pixels; default: <SAMP>array( 400 )</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.image.size.detail</SAMP>: image (maximum) size in detail view [pixels; default: <SAMP>400</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.image.size.thumbnail</SAMP>: image (maximum) size in thumbnail [pixels; default: <SAMP>100</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.image.thumbnail.list.use</SAMP>: use thumbnail in list view [default: <SAMP>false</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.image.thumbnail.detail.use</SAMP>: use thumbnail in detail view [default: <SAMP>false</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.frameset.topbar.height</SAMP>: frameset top-bar's dimension (height) [pixels; default: <SAMP>90</SAMP>]</LI>
@@ -73,7 +73,7 @@
  *
  * <P><B>USAGE:</B> directory-specific configuration</P>
  * <P>Most work space parameters can be overridden on a per-directory basis, by using the so-called <I>directory-specific configuration file</I>,
- * named <SAMP>.php-ape.explorer.conf.php</SAMP> (which SHOULD be set read-only for everyone).</P>
+ * named <SAMP>.php-ape.explorer.conf.php</SAMP>.</P>
  *
  * <P><B>USAGE:</B> file/directory permissions</P>
  * <P>PHP-APE explorer is executed with the UID/GID of the enclosing HTTP daemon. Files and directories MUST thus have permissions allowing
@@ -173,7 +173,7 @@ extends PHP_APE_HTML_WorkSpace
     // Parent environment
     parent::_verifyParameters( $rasParameters );
 
-    // Explorer's title
+    // Default title
     if( array_key_exists( 'php_ape.explorer.title', $rasParameters ) )
     {
       $rValue =& $rasParameters[ 'php_ape.explorer.title' ];
@@ -188,7 +188,7 @@ extends PHP_APE_HTML_WorkSpace
       $rValue =& $rasParameters[ 'php_ape.explorer.htdocs.url' ];
       $rValue = trim( PHP_APE_Type_Path::parseValue( $rValue ) );
       if( empty( $rValue ) )
-        $rValue = 'http://localhost/php-ape/apps/explorer';
+        $rValue = '/php-ape/apps/explorer';
       else
         $rValue = rtrim( $rValue, '/' );
     }
@@ -215,7 +215,7 @@ extends PHP_APE_HTML_WorkSpace
         $rValue = rtrim( $rValue, '/' );
     }
 
-    // Explorer's root data (server) path
+    // Root data (server) path
     if( array_key_exists( 'php_ape.explorer.data.path', $rasParameters ) )
     {
       $rValue =& $rasParameters[ 'php_ape.explorer.data.path' ];
