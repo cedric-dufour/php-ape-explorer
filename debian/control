@@ -1,0 +1,19 @@
+Source: php-ape-explorer
+Section: web
+Priority: optional
+Maintainer: Cedric Dufour <cedric.dufour@ced-network.net>
+Build-Depends: debhelper (>= 5) 
+
+Package: php-ape-explorer
+Architecture: all
+Depends: php-ape, php5-gd
+Recommends: smarty
+Description: PHP-APE Explorer
+ The PHP-APE Explorer Application allows one to easily grant read and/or write
+ access to a given directory (and its sub-directories) on the host filesystem
+ and thus implement a simple web-based file or image explorer.
+
+Package: php-ape-explorer-doc
+Architecture: all
+Recommends: php-ape-explorer
+Description: PHP-APE Explorer - Documentation

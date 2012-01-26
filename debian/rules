@@ -1,0 +1,105 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+DEB_VERSION := $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f 2 -d ' ')
+DEB_NOEPOCH_VERSION := $(shell echo $(DEB_VERSION) | cut -d: -f2-)
+DEB_UPSTREAM_VERSION := $(shell echo $(DEB_NOEPOCH_VERSION) | sed 's/-[^-]*$$//')
+
+DEB_PACKAGE_PARENT = php-ape
+DEB_PACKAGE_SOURCE = php-ape-explorer-source
+DEB_PACKAGE = php-ape-explorer
+DEB_PACKAGE_DOC = php-ape-explorer-doc
+
+.PHONY: build clean install binary-indep binary-arch binary
+
+build: build-stamp
+
+build-stamp:
+	dh_testdir
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean build-stamp
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	# Create the Debian packages
+
+	# ... DEB_PACKAGE
+	mkdir -p debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE_PARENT)
+	cp -r php debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE_PARENT)/.
+	./util/fixperm -s debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE_PARENT)
+	mkdir -p debian/$(DEB_PACKAGE)/usr/share/doc/$(DEB_PACKAGE)
+	cp *.TXT debian/$(DEB_PACKAGE)/usr/share/doc/$(DEB_PACKAGE)/.
+	sed -i "s/@version@/$(DEB_UPSTREAM_VERSION)/g" debian/$(DEB_PACKAGE)/usr/share/doc/$(DEB_PACKAGE)/*.TXT
+	
+	# ... DEB_PACKAGE_DOC
+	mkdir -p debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html
+	./util/makedoc PHP_APE_Explorer "PHP-APE Explorer" debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html php #doc/phpdoc
+	find debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html -type f -exec fgrep -q '@version@' {} \; -exec sed -i "s/@version@/$(DEB_UPSTREAM_VERSION)/g" {} \;
+	./util/fixperm -d debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/html
+	mkdir -p debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/examples
+	cp etc/php-ape.explorer.conf.php-sample debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/examples/php-ape.explorer.conf.php
+
+# Build architecture-dependent files here.
+binary-arch: build install
+# We have nothing to do by default.
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installexamples
+	dh_installchangelogs 
+	dh_compress --exclude=classTree.js
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+
+build-source-tarball:
+	dh_testdir
+	dh_clean build-stamp
+	# Create the source tarball
+	mkdir -p /tmp/$(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION)
+	cp -r * /tmp/$(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION)/.
+	tar -C /tmp -cjf ../$(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION).tar.bz2 $(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION)
+	rm -rf /tmp/$(DEB_PACKAGE_SOURCE)-$(DEB_UPSTREAM_VERSION)
+
+build-install-tarball:
+	# WARNING: make install before-hand!
+	# Create the installation tarball
+	mkdir -p /tmp/$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)
+	cp -rp debian/$(DEB_PACKAGE)/usr/share/$(DEB_PACKAGE_PARENT)/* /tmp/$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)/.
+	cp -p debian/$(DEB_PACKAGE)/usr/share/doc/$(DEB_PACKAGE)/*.TXT* /tmp/$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)/.
+	tar -C /tmp -cjf ../$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION).tar.bz2 $(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)
+	rm -rf /tmp/$(DEB_PACKAGE)-$(DEB_UPSTREAM_VERSION)
+
+build-doc-tarball:
+	# WARNING: make install before-hand!
+	# Create the documentation tarball
+	mkdir -p /tmp/$(DEB_PACKAGE_DOC)-$(DEB_UPSTREAM_VERSION)
+	cp -rp debian/$(DEB_PACKAGE_DOC)/usr/share/doc/$(DEB_PACKAGE)/* /tmp/$(DEB_PACKAGE_DOC)-$(DEB_UPSTREAM_VERSION)/.
+	tar -C /tmp -cjf ../$(DEB_PACKAGE_DOC)-$(DEB_UPSTREAM_VERSION).tar.bz2 $(DEB_PACKAGE_DOC)-$(DEB_UPSTREAM_VERSION)
+	rm -rf /tmp/$(DEB_PACKAGE_DOC)-$(DEB_UPSTREAM_VERSION)
+
+debian-packages:
+	debuild -us -uc -b
+
+debian-source:
+	debuild -I'.git*' -us -uc -S
+
+release: debian-packages build-install-tarball build-doc-tarball debian-source build-source-tarball
+
