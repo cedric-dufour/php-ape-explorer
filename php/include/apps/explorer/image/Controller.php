@@ -243,8 +243,8 @@ extends PHP_APE_Explorer_Controller
       // Output
       $oHTML = $this->getFormView( $oFunction, null, null, $amPassthruVariables );
       // ... sub-title
-//       $sOutput .= $this->htmlSubTitle( $oFunction, 'S-new' );
-//       $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
+      $sOutput .= $this->htmlContentTitle( $oFunction, 'S-new' );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
       // ... errors
       $asErrors = $oHTML->getErrors();
       if( count( $asErrors ) )
@@ -299,8 +299,8 @@ extends PHP_APE_Explorer_Controller
       // Output
       $oHTML = $this->getFormView( $oFunction, $oView, PHP_APE_Data_isQueryAbleResultSet::Query_Full, $amPassthruVariables );
       // ... sub-title
-//       $sOutput .= $this->htmlSubTitle( $oFunction, 'S-edit' );
-//       $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
+      $sOutput .= $this->htmlContentTitle( $oFunction, 'S-edit' );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
       // ... errors
       $asErrors = $oHTML->getErrors();
       if( count( $asErrors ) )
@@ -352,9 +352,6 @@ extends PHP_APE_Explorer_Controller
 
       // Output
       $oHTML = $this->getDetailView( $oView, PHP_APE_Data_isQueryAbleResultSet::Query_Full, $amPassthruVariables );
-//       // ... sub-title
-//       $sOutput .= $this->htmlSubTitle( $oView, 'S-image' );
-//       $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
       // ... errors
       $asErrors = $oHTML->getErrors();
       if( count( $asErrors ) )
@@ -388,9 +385,6 @@ extends PHP_APE_Explorer_Controller
       if( self::$roEnvironment->getUserParameter( 'php_ape.explorer.image.thumbnail.list.use' ) )
         $iQueryMeta |= PHP_APE_Data_isQueryAbleResultSet::Disable_DeleteAble | PHP_APE_Data_isQueryAbleResultSet::Disable_InsertAble | PHP_APE_Data_isQueryAbleResultSet::Disable_UpdateAble | PHP_APE_Data_isQueryAbleResultSet::Disable_DetailAble;
       $oHTML = $this->getListView( $oView, $iQueryMeta, $amPassthruVariables );
-//       // ... sub-title
-//       $sOutput .= $this->htmlSubTitle( $oView, 'S-list' );
-//       $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
       // ... errors
       $asErrors = $oHTML->getErrors();
       if( count( $asErrors ) )

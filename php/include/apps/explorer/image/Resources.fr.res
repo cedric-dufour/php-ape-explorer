@@ -8,7 +8,7 @@ Name.View.Detail = "Détail de l'image"
 Description.View.Detail = "Données détaillées sur l'image"
 
 Name.Function.Update = "Éditer l'image"
-Description.Function.Update = "Éditez et mettez à jour les données de l'image (ou renommez-en le fichier)"
+Description.Function.Update = "Modifiez les données IPTC de l'image"
 
 Name.Image = "Image"
 Description.Image = "Image (aperçu)"

@@ -7,10 +7,9 @@ Name.View.Detail = "Image detail"
 Description.View.Detail = "Image detailed data"
 
 Name.Function.Update = "Edit image"
-Description.Function.Update = "Edit image data (or rename file)"
+Description.Function.Update = "Modify image IPTC data"
 
 Name.Image = "Image"
 Description.Image = "Image (pre-)view"
 
 Error.Update = "Failed to update file"
-

@@ -7,8 +7,8 @@ Description.View.Detail = "Données détaillées sur le fichier"
 
 Name.Function.Insert = "Nouveau fichier"
 Description.Function.Insert = "Ajoutez (téléchargez) un nouveau fichier"
-Name.Function.Update = "Éditer le fichier"
-Description.Function.Update = "Renommer le fichier"
+Name.Function.Update = "Renommer le fichier"
+Description.Function.Update = "Changer le nom du fichier"
 Name.Function.Delete = "Effacer le fichier"
 Description.Function.Delete = "Effacer (définitivement) le fichier"
 

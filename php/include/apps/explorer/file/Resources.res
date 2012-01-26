@@ -6,10 +6,10 @@ Description.View.Detail = "File detailed data"
 
 Name.Function.Insert = "New file"
 Description.Function.Insert = "Insert (upload) new file"
-Name.Function.Update = "Edit file"
-Description.Function.Update = "Rename file"
+Name.Function.Update = "Rename file"
+Description.Function.Update = "Change file name"
 Name.Function.Delete = "Delete file"
-Description.Function.Delete = "Delete file"
+Description.Function.Delete = "(Permanently) delete file"
 
 Name.Upload = "Upload"
 Description.Upload = "Browse your computer for the file to upload"

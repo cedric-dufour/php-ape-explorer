@@ -280,24 +280,6 @@ extends PHP_APE_HTML_Controller
     return PHP_APE_HTML_SmartTags::htmlLabel( $this->getTitle(), 'M-browse', null, null, null, true, false, 'H1' );
   }
 
-//   /** Returns the HTML page's sub-title
-//    *
-//    * @return string
-//    */
-//   public function htmlSubTitle( $sName, $sDescription = null, $sIconID = null )
-//   {
-//     // Sanitize input
-//     $sName = trim( PHP_APE_Type_String::parseValue( $sName ) );
-//     $sDescription = trim( PHP_APE_Type_String::parseValue( $sDescription ) );
-
-//     // Output
-//     $sOutput = null;
-//     $sOutput .= PHP_APE_HTML_SmartTags::htmlLabel( $sName, $sIconID, null, null, null, true, false, 'H2' );
-//     if( strlen( $sDescription ) > 0 )
-//       $sOutput .= '<P>'.self::$oDataSpace_HTML->encodeData( $sDescription ).'</P>'."\r\n";
-//     return $sOutput;
-//   }
-
   /** Returns the HTML page's footer
    *
    * @return string

@@ -111,8 +111,8 @@ extends PHP_APE_Explorer_Controller
       // Output
       $oHTML = $this->getFormView( $oFunction, null, null, $amPassthruVariables );
       // ... sub-title
-//       $sOutput .= $this->htmlSubTitle( $oFunction, 'S-new' );
-//       $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
+      $sOutput .= $this->htmlContentTitle( $oFunction, 'S-new' );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
       // ... errors
       $asErrors = $oHTML->getErrors();
       if( count( $asErrors ) )
@@ -167,8 +167,8 @@ extends PHP_APE_Explorer_Controller
       // Output
       $oHTML = $this->getFormView( $oFunction, $oView, PHP_APE_Data_isQueryAbleResultSet::Query_Full, $amPassthruVariables );
       // ... sub-title
-//       $sOutput .= $this->htmlSubTitle( $oFunction, 'S-edit' );
-//       $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
+      $sOutput .= $this->htmlContentTitle( $oFunction, 'S-edit' );
+      $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
       // ... errors
       $asErrors = $oHTML->getErrors();
       if( count( $asErrors ) )
@@ -220,9 +220,6 @@ extends PHP_APE_Explorer_Controller
 
       // Output
       $oHTML = $this->getDetailView( $oView, PHP_APE_Data_isQueryAbleResultSet::Query_Full, $amPassthruVariables );
-//       // ... sub-title
-//       $sOutput .= $this->htmlSubTitle( $oView->getBasename(), $oView->getDescription(), 'S-detail' );
-//       $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
       // ... errors
       $asErrors = $oHTML->getErrors();
       if( count( $asErrors ) )
@@ -255,9 +252,6 @@ extends PHP_APE_Explorer_Controller
 
       // Output
       $oHTML = $this->getListView( $oView, PHP_APE_Data_isQueryAbleResultSet::Query_Full, $amPassthruVariables );
-//       // ... sub-title
-//       $sOutput .= $this->htmlSubTitle( $oView, 'S-list' );
-//       $sOutput .= PHP_APE_HTML_SmartTags::htmlSpacer();
       // ... errors
       $asErrors = $oHTML->getErrors();
       if( count( $asErrors ) )
