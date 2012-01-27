@@ -31,7 +31,7 @@
  * <P>The following static parameters (properties) are provisioned by this workspace:</P>
  * <UL>
  * <LI><SAMP>php_ape.explorer.title</SAMP>: default title [default: <SAMP>null</SAMP>]</LI>
- * <LI><SAMP>php_ape.explorer.htdocs.url</SAMP>: explorer's root HTML documents URL [default: <SAMP>/php-ape/apps/explorer</SAMP>]</LI>
+ * <LI><SAMP>php_ape.explorer.htdocs.url</SAMP>: explorer's root HTML documents URL [default: <SAMP>/php-ape/explorer</SAMP>]</LI>
  * <LI><SAMP>php_ape.explorer.file.htdocs.url</SAMP>: file explorer's root HTML documents URL [default: <SAMP>php_ape.explorer.htdocs.url</SAMP>.'/file']</LI>
  * <LI><SAMP>php_ape.explorer.image.htdocs.url</SAMP>: image explorer's root HTML documents URL [default: <SAMP>php_ape.explorer.htdocs.url</SAMP>.'/image']</LI>
  * <LI><SAMP>php_ape.explorer.data.path</SAMP>: root data (server) path [default: <SAMP>null</SAMP>]</LI>
@@ -188,7 +188,7 @@ extends PHP_APE_HTML_WorkSpace
       $rValue =& $rasParameters[ 'php_ape.explorer.htdocs.url' ];
       $rValue = trim( PHP_APE_Type_Path::parseValue( $rValue ) );
       if( empty( $rValue ) )
-        $rValue = '/php-ape/apps/explorer';
+        $rValue = '/php-ape/explorer';
       else
         $rValue = rtrim( $rValue, '/' );
     }

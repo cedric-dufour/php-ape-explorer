@@ -37,7 +37,7 @@
 # DEFAULT: $_CONFIG['php_ape.explorer.title'] = null;
 
 # Explorer's root HTML documents URL
-# DEFAULT: $_CONFIG['php_ape.explorer.htdocs.url'] = '/php-ape/apps/explorer';
+# DEFAULT: $_CONFIG['php_ape.explorer.htdocs.url'] = '/php-ape/explorer';
 
 # File explorer's root HTML documents URL
 # DEFAULT: $_CONFIG['php_ape.explorer.file.htdocs.url'] = $_CONFIG['php_ape.explorer.htdocs.url'].'/file';
