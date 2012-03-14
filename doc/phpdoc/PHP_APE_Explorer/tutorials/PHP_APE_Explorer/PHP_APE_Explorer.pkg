@@ -41,7 +41,13 @@ Cedric Dufour
 <para><emphasis>NOTE:</emphasis> By &quot;build&quot;, we mean create the necessary tarballs/package required for installation (according to the INSTALL section below) or distribution.</para>
 
 <refsect2 id="{@id build_tree}">
-<title>[MUST] Obtain the source tarball</title>
+<title>[MUST] Obtain the source code</title>
+<screen>
+<![CDATA[
+$ git clone https://github.com/cedric-dufour/php-ape-explorer
+]]>
+</screen>
+<para>[OR]</para>
 <screen>
 <![CDATA[
 $ tar -xjf php-ape-explorer-source-@version@.tar.bz2
@@ -166,19 +172,6 @@ $ tar -xjf php-ape-explorer-doc-@version@.tar.bz2
 <screen>
 <![CDATA[
 $ dpkg -i php-ape-explorer-doc_@version@_all.deb
-]]>
-</screen>
-</refsect3>
-
-<refsect3 id="{@id install_doc_source}">
-<title>[OR] using the source tarball (and PhpDocumentor)</title>
-<screen>
-<![CDATA[
-$ DOC_DIR='<documentation-directory>'
-$ pear install -o PhpDocumentor
-$ tar -xjf php-ape-explorer-source-@version@.tar.bz2
-$ cd php-ape-explorer-@version@
-$ ./util/makedoc PHP_APE_Explorer "PHP-APE Explorer" "${DOC_DIR}" php doc/phpdoc
 ]]>
 </screen>
 </refsect3>

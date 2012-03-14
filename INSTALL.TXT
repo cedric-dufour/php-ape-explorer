@@ -10,7 +10,11 @@ BUILD
 NOTE: By "build", we mean create the necessary tarballs/package required for
       installation (according to the INSTALL section below) or distribution.
 
-1. [MUST] Obtain the source tarball:
+1. [MUST] Obtain the source code:
+
+   BASH: git clone https://github.com/cedric-dufour/php-ape-explorer
+
+   OR
 
    BASH: tar -xjf php-ape-explorer-source-@version@.tar.bz2
    BASH: cd php-ape-explorer-source-@version@
@@ -81,19 +85,10 @@ NOTE: We assume a previously working PHP-APE setup.
 
       BASH: dpkg -i php-ape-explorer-doc_@version@_all.deb
 
-   OR
-
-   c. using the source tarball (and PhpDocumentor):
-   
-      BASH: DOC_DIR='<documentation-directory>'
-      BASH: pear install -o PhpDocumentor
-      BASH: tar -xjf php-ape-explorer-source-@version@.tar.bz2
-      BASH: cd php-ape-explorer-source-@version@
-      BASH: ./util/makedoc PHP_APE_Explorer "PHP-APE Explorer" "${DOC_DIR}" php doc/phpdoc
-
 
 CONFIGURATION AND USAGE
 -----------------------
 
-Please refer to the HTML (PhpDocumentor) documentation.
+Please refer to the HTML documentation (in the documentation tarball or debian
+package).
 
