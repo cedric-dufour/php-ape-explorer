@@ -8,7 +8,7 @@
 <refsynopsisdiv>
 <author>
 Cedric Dufour
-<authorblurb>{@link http://www.ced-network.net/php-ape/explorer http://www.ced-network.net/php-ape/explorer}</authorblurb>
+<authorblurb>{@link http://cedric.dufour.name/software/php-ape/explorer http://cedric.dufour.name/software/php-ape/explorer}</authorblurb>
 </author>
 </refsynopsisdiv>
 
@@ -18,7 +18,7 @@ Cedric Dufour
 
 <refsect1 id="{@id whatis}">
 <title>What is PHP-APE Explorer ?</title>
-<para>Actual application based on the {@link http://www.ced-network.net/php-ape PHP Application Programming Environment (PHP-APE)}, <firstterm>PHP-APE Explorer</firstterm> implements a simple web-based file or image explorer, which allows to easily grant read and/or write access to a given directory (and its sub-directories) on the host filesystem.</para>
+<para>Actual application based on the {@link http://cedric.dufour.name/software/php-ape PHP Application Programming Environment (PHP-APE)}, <firstterm>PHP-APE Explorer</firstterm> implements a simple web-based file or image explorer, which allows to easily grant read and/or write access to a given directory (and its sub-directories) on the host filesystem.</para>
 </refsect1>
 
 
