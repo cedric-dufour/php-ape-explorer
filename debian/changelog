@@ -1,3 +1,9 @@
+php-ape-explorer (1.2.20130926) unstable; urgency=low
+
+  * New release (see https://github.com/cedric-dufour/php-ape-explorer/commits/ for change log)
+
+ -- Cedric Dufour <cedric.dufour(git)@ced-network.net>  Thu, 26 Sep 2013 13:33:14 +0200
+
 php-ape-explorer (1.2.20121214) unstable; urgency=low
 
   * New release (see https://github.com/cedric-dufour/php-ape-explorer/commits/ for change log)
